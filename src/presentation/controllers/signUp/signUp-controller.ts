@@ -18,6 +18,6 @@ export class SignUp implements ControllerInterface {
       return successResponse('User created with success')
     } catch (err) {
       return serverError(new ServerError(err))
-    } 
+    }  
   }
 } 

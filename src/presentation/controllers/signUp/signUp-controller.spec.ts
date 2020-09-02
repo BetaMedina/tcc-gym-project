@@ -59,7 +59,7 @@ describe('=== SignUpController TESTS ===', () => {
     const { sut, validatorStub } = makeSut()
      
     jest.spyOn(validatorStub, 'validate').mockImplementationOnce(() => { return new MissingParamError('password') })
-    
+     
     const payload = {
       body: {
         password: '',

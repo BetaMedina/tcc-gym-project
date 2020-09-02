@@ -7,7 +7,6 @@
     "test": "jest --passWithNoTests  --noStackTrace --runInBand --no-cache",
     "test:watch": "jest --passWithNoTests  --noStackTrace --runInBand --no-cache --watch",
     "test:ci": "npm run test -- --coverage"
-
   },
   "keywords": [],
   "author": "",
@@ -23,7 +22,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.2.5",
     "jest": "^26.4.2",
-    "lint-staged": "^10.2.13",
+    "lint-staged": "^10.2.11",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.2",
     "@types/validator": "^13.1.0"

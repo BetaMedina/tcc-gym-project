@@ -20,4 +20,4 @@ export class SignUp implements ControllerInterface {
       return serverError(new ServerError(err))
     } 
   }
-}
+} 

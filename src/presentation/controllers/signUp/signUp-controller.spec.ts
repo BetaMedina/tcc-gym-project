@@ -57,7 +57,7 @@ describe('=== SignUpController TESTS ===', () => {
   })
   it('Should be return error if validate report error', async () => {
     const { sut, validatorStub } = makeSut()
-    
+     
     jest.spyOn(validatorStub, 'validate').mockImplementationOnce(() => { return new MissingParamError('password') })
     
     const payload = {

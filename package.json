@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests  --noStackTrace --runInBand --no-cache",
-    "test:watch": "jest --passWithNoTests  --noStackTrace --runInBand --no-cache --watch"
+    "test:watch": "jest --passWithNoTests  --noStackTrace --runInBand --no-cache --watch",
+    "test:ci": "npm run test -- --coverage"
+
   },
   "keywords": [],
   "author": "",

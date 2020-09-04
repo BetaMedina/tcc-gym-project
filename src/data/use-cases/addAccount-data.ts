@@ -6,6 +6,6 @@ export class DbAddAccount implements AddAccount {
   constructor (private addAccountReposity :AddAccountRepository) {}
 
   async create (accountData:AddAccountReceived):Promise<UserAccount> {
-    return this.addAccountReposity.create(accountData)
+    return this.addAccountReposity.createRow(accountData)
   }
 }

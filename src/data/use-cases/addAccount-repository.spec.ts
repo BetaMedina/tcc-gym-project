@@ -10,9 +10,9 @@ interface SutTypes {
 
 const makeSut = ():SutTypes => {
   class AddAccountReposityStub implements AddAccountRepository {
-    async create (accountData:AddAccountReceived):Promise<UserAccount> {
+    async createRow (accountData:AddAccountReceived):Promise<UserAccount> {
       const fakeAccount = {
-        id: 'validId',
+        id: 1,
         name: 'validName',
         email: 'validMail',
         password: 'hashedValue'
@@ -33,7 +33,7 @@ const makeSut = ():SutTypes => {
 describe('DbAddAccount UseCase', () => {
   it('Should call addAccountRepositorie with correct password ', async () => {
     const { addAccountReposityStub, sut } = makeSut()
-    const createSpy = jest.spyOn(addAccountReposityStub, 'create')
+    const createSpy = jest.spyOn(addAccountReposityStub, 'createRow')
     const accountData = {
       name: 'validName',
       email: 'validMail',
@@ -48,7 +48,7 @@ describe('DbAddAccount UseCase', () => {
   })
   it('Should throw if addAccountRepositorie throws ', async () => {
     const { addAccountReposityStub, sut } = makeSut()
-    jest.spyOn(addAccountReposityStub, 'create').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(addAccountReposityStub, 'createRow').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const accountData = {
       name: 'validName',
       email: 'validMail',
@@ -66,7 +66,7 @@ describe('DbAddAccount UseCase', () => {
     }
     const account = await sut.create(accountData)
     expect(account).toEqual({
-      id: 'validId',
+      id: 1,
       name: 'validName',
       email: 'validMail',
       password: 'hashedValue'

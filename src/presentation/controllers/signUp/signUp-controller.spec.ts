@@ -16,7 +16,8 @@ class ValidatorStub implements Validation {
 
 class AddAccountStub implements AddAccount {
   create (payload:AddAccountReceived):Promise<UserAccount> {
-    return new Promise(resolve => resolve({ ...payload, id: 'valid_id' }))
+    delete payload.password
+    return new Promise(resolve => resolve({ ...payload, id: 1 }))
   }
 }
 

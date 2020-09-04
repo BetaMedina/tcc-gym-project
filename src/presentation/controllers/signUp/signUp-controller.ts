@@ -1,5 +1,5 @@
-import { ServerError } from '../../errors'
-import { badRequest, serverError, successResponse } from '../../helpers/http/http-helper'
+import { ServerError } from '@presentation/errors'
+import { badRequest, serverError, successResponse } from '@presentation/helpers/http/http-helper'
 import { Validation, HttpRequest, HttpResponse, ControllerInterface, AddAccount } from './signUp-protocols'
 
 export class SignUp implements ControllerInterface {
@@ -17,6 +17,7 @@ export class SignUp implements ControllerInterface {
       await this.addAccount.create(httpRequest.body)
       return successResponse('User created with success')
     } catch (err) {
+      console.log(err)
       return serverError(new ServerError(err))
     }  
   }

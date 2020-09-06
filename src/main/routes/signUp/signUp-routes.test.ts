@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { Connection, getRepository, getConnection } from 'typeorm'
+import { Connection, getConnection } from 'typeorm'
 import createConnection from '@infra/db/mysql/typeorm/conn/typeorm-conn'
 
 import app from '@main/config/app'

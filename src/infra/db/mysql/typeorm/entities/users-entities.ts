@@ -5,7 +5,8 @@ import {
   Column,
   UpdateDateColumn,
   BeforeInsert,
-  BaseEntity
+  BaseEntity,
+  AfterLoad
 } from 'typeorm'
 import bcrypt from 'bcrypt'
 
@@ -20,7 +21,7 @@ class Users extends BaseEntity {
   @Column('varchar', { unique: true })
   email: string;
   
-  @Column('varchar')
+  @Column('varchar', { select: false })
   password: string;
 
   @Column('boolean', { default: false })
@@ -31,11 +32,6 @@ class Users extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-  
-  @BeforeInsert()
-  async hashPassword () {
-    this.password = await bcrypt.hash(this.password, 11)
-  }
 }
 
 export { Users }

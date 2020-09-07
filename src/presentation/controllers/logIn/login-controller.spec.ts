@@ -1,9 +1,7 @@
-import { Validation, Authentication } from './login-protocols'
+import { Validation, Authentication, AuthenticationParams, AuthenticationModel } from './login-protocols'
 import { LoginController } from './login-controller'
 import { InvalidParamError, UnauthorizedError } from '@presentation/errors'
 import { badRequest } from '@presentation/helpers/http/http-helper'
-import { AuthenticationParams } from '@domain/use-cases/authenticated'
-import { AuthenticationModel } from '@domain/models/authentication'
 
 interface SutTypes {
   validatorSut: Validation

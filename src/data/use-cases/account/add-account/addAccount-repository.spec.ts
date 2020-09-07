@@ -1,6 +1,6 @@
 import { DbAddAccount } from './addAccount-data'
 import { AddAccountReceived } from '@data/protocols/account/add-account'
-import { AddAccountRepository } from '@domain/use-cases/add-account-db'
+import { AddAccountRepository } from '@domain/use-cases/account/add-account-db'
 import { UserAccount } from '@domain/models/use-account'
 import { Encrypter } from '@data/protocols/encrypter/encrypt'
 

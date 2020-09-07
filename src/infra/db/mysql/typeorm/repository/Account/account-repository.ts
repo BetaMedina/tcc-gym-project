@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm'
 import { LoadAccountByEmailRepository } from '@data/protocols/account/load-account-email'
 import { Users } from '../../entities/users-entities'
 import { AddAccountReceived } from '@data/protocols/account/add-account'
-import { AddAccountRepository } from '@domain/use-cases/add-account-db'
+import { AddAccountRepository } from '@domain/use-cases/account/add-account-db'
 import { UserAccount } from '@domain/models/use-account'
 
 export class Account implements AddAccountRepository, LoadAccountByEmailRepository {

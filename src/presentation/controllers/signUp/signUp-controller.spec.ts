@@ -1,8 +1,7 @@
-import { InvalidParamError, ServerError } from '../../errors'
-import { AddAccount, AddAccountReceived } from '../../../data/protocols/add-account'
+import { ServerError } from '../../errors'
+import { AddAccount, AddAccountReceived } from '../../../data/protocols/account/add-account'
 
 import { MissingParamError } from '../../errors/missingParam-error'
-import { EmailValidation } from '../../protocols/email-validation'
 import { SignUp } from './signUp-controller'
 import { UserAccount } from '../../../domain/models/use-account'
 import { Validation } from './signUp-protocols'

@@ -1,4 +1,4 @@
-import { UserAccount } from '../../domain/models/use-account'
+import { UserAccount } from '../../../domain/models/use-account'
 
 export interface AddAccountReceived{
   name:string,

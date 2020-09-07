@@ -5,12 +5,10 @@ import createConnection from '@infra/db/mysql/typeorm/conn/typeorm-conn'
 import 'reflect-metadata'
 
 const app = express()
-
 async ():Promise<void> => {
-  await createConnection()
+  await createConnection('medina_test')
 }
-
 setupMiddlewares(app)
 setupRoutes(app)
-
+  
 export default app

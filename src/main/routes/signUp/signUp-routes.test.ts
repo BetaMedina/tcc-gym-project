@@ -8,18 +8,14 @@ let connection: Connection
 
 describe('SignUp Routes', () => {
   beforeAll(async () => {
-    connection = await createConnection()
-    await connection.runMigrations()
+    connection = await createConnection('medina_test')
   })
   beforeEach(async () => {
     await connection.query('DELETE FROM users')
   })
   
   afterAll(async () => {
-    const mainConnection = getConnection()
-
     await connection.close()
-    await mainConnection.close()
   })
   
   test('Should return an account on success', async () => {

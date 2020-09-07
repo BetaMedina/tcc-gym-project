@@ -4,11 +4,8 @@ import {
   CreateDateColumn,
   Column,
   UpdateDateColumn,
-  BeforeInsert,
-  BaseEntity,
-  AfterLoad
+  BaseEntity
 } from 'typeorm'
-import bcrypt from 'bcrypt'
 
 @Entity('users')
 class Users extends BaseEntity {
@@ -21,7 +18,7 @@ class Users extends BaseEntity {
   @Column('varchar', { unique: true })
   email: string;
   
-  @Column('varchar', { select: false })
+  @Column('varchar')
   password: string;
 
   @Column('boolean', { default: false })

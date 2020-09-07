@@ -1,4 +1,4 @@
-import { AddAccountReceived } from '../../data/protocols/add-account'
+import { AddAccountReceived } from '../../data/protocols/account/add-account'
 import { UserAccount } from '../models/use-account'
 
 export interface AddAccountRepository{

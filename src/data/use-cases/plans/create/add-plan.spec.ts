@@ -1,6 +1,5 @@
-import { AddPlanRepository } from '@data/protocols/plan/add-plan-db'
-import { Plan } from '@domain/models/plans'
-import { AddPlanReceived } from '@domain/use-cases/plans/add-plan-db'
+import { AddPlanRepository, AddPlanReceived } from '@data/protocols/plan/add-plan-db'
+import { Plan } from '@domain/models/plans/plans'
 import { AddPlan } from './add-plan'
 
 interface SutTypes{

@@ -20,6 +20,11 @@ export const successResponse = (body):HttpResponse => ({
   body
 })
 
+export const emptyResponse = ():HttpResponse => ({
+  statusCode: 204,
+  body: 'emptyResponse'
+})
+
 export const unauthorizedResponse = ():HttpResponse => ({
   statusCode: 401,
   body: new UnauthorizedError()

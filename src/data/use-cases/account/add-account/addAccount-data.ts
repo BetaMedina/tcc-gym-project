@@ -1,10 +1,10 @@
 import { Encrypter } from '@data/protocols/encrypter/encrypt'
-import { UserAccount } from '@domain/models/use-account'
+import { AddAccountReceived, AddAccount } from '@data/protocols/account/add-account'
+import { UserAccount } from '@domain/models/account/use-account'
 import { AddAccountRepository } from '@domain/use-cases/account/add-account-db'
-import { AddAccount, AddAccountReceived } from '@data/protocols/account/add-account'
 
-export class DbAddAccount implements AddAccount {
-  constructor (private addAccountReposity :AddAccountRepository, private readonly hash:Encrypter) {}
+export class DbAddAccount implements AddAccountRepository {
+  constructor (private addAccountReposity :AddAccount, private readonly hash:Encrypter) {}
 
   async create (accountData:AddAccountReceived):Promise<UserAccount> {
     const hashsPassword = await this.hash.encrypt(accountData.password)

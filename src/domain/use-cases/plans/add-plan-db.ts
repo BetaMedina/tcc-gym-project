@@ -1,4 +1,4 @@
-import { Plan } from '@domain/models/plans'
+import { Plan } from '@domain/models/plans/plans'
 
 export interface AddPlanReceived{
   name:string,

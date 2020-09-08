@@ -1,6 +1,6 @@
 export * from '@presentation/protocols'
 export * from '@domain/use-cases/account/add-account-db'
-export * from '@domain/models/use-account'
+export * from '@domain/models/account/use-account'
 export * from '@presentation/protocols/validation'
 export * from '@data/protocols/account/add-account'
 export * from '@presentation/errors'

@@ -3,8 +3,9 @@ import { AddAccount, AddAccountReceived } from '../../../data/protocols/account/
 
 import { MissingParamError } from '../../errors/missingParam-error'
 import { SignUp } from './signUp-controller'
-import { UserAccount } from '../../../domain/models/use-account'
+import { UserAccount } from '../../../domain/models/account/use-account'
 import { Validation } from './signUp-protocols'
+import { AddAccountRepository } from '../plans/plans-protocols'
 
 // class EmailValidationStub
 class ValidatorStub implements Validation {
@@ -13,7 +14,7 @@ class ValidatorStub implements Validation {
   }
 }
 
-class AddAccountStub implements AddAccount {
+class AddAccountStub implements AddAccountRepository {
   create (payload:AddAccountReceived):Promise<UserAccount> {
     delete payload.password
     return new Promise(resolve => resolve({ ...payload, id: 1 }))
@@ -23,7 +24,7 @@ class AddAccountStub implements AddAccount {
 export interface SutTypes{
   sut:SignUp,
   validatorStub:ValidatorStub
-  addAccountStub:AddAccountStub
+  addAccountStub:AddAccountRepository
 }
 
 const makeSut = (): SutTypes => {

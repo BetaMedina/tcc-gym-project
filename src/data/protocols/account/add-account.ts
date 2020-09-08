@@ -1,4 +1,4 @@
-import { UserAccount } from '../../../domain/models/use-account'
+import { UserAccount } from '@domain/models/account/use-account'
 
 export interface AddAccountReceived{
   name:string,
@@ -7,5 +7,5 @@ export interface AddAccountReceived{
 }
 
 export interface AddAccount{
-  create (account:AddAccountReceived):Promise<UserAccount> 
+  createRow (account:AddAccountReceived):Promise<UserAccount> 
 }

@@ -1,6 +1,9 @@
-import { Plan } from '@domain/models/plans'
-import { AddPlanReceived } from '@domain/use-cases/plans/add-plan-db'
-
+import { Plan } from '@domain/models/plans/plans'
+export interface AddPlanReceived{
+  name:string,
+  price:Number,
+  duration:string
+}
 export interface AddPlanRepository{
   createRow (account:AddPlanReceived):Promise<Plan> 
 }

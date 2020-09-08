@@ -1,6 +1,6 @@
 import { AddAccountReceived } from '@data/protocols/account/add-account'
-import { UserAccount } from '@domain/models/use-account'
+import { UserAccount } from '@domain/models/account/use-account'
 
 export interface AddAccountRepository{
-  createRow (account:AddAccountReceived):Promise<UserAccount> 
+  create (account:AddAccountReceived):Promise<UserAccount> 
 }

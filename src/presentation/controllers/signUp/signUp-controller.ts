@@ -1,11 +1,11 @@
 import { ServerError } from '@presentation/errors'
 import { badRequest, serverError, successResponse } from '@presentation/helpers/http/http-helper'
-import { Validation, HttpRequest, HttpResponse, ControllerInterface, AddAccount } from './signUp-protocols'
+import { Validation, HttpRequest, HttpResponse, ControllerInterface, AddAccountRepository } from './signUp-protocols'
 
 export class SignUp implements ControllerInterface {
   constructor (
     private readonly payloadValidation:Validation,
-    private readonly addAccount:AddAccount
+    private readonly addAccount:AddAccountRepository
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {

@@ -1,7 +1,7 @@
 import { Compare } from '@data/protocols/encrypter/encrypt'
 import { JwtAdapter } from '@data/protocols/encrypter/hash-jwt'
 import { LoadAccountByEmailRepository } from '@data/protocols/account/load-account-email'
-import { AuthenticationModel } from '@domain/models/authentication'
+import { AuthenticationModel } from '@domain/models/account/authentication'
 import { Authentication, AuthenticationParams } from '@domain/use-cases/account/authenticated'
 
 export class AuthenticationData implements Authentication {

@@ -1,12 +1,12 @@
 import { DbAddAccount } from './addAccount-data'
-import { AddAccountReceived } from '@data/protocols/account/add-account'
+import { AddAccount, AddAccountReceived } from '@data/protocols/account/add-account'
 import { AddAccountRepository } from '@domain/use-cases/account/add-account-db'
-import { UserAccount } from '@domain/models/use-account'
+import { UserAccount } from '@domain/models/account/use-account'
 import { Encrypter } from '@data/protocols/encrypter/encrypt'
 
 interface SutTypes {
   sut:DbAddAccount
-  addAccountReposityStub:AddAccountRepository
+  addAccountReposityStub:AddAccount
   encryptSut:Encrypter
 }
 
@@ -17,7 +17,7 @@ const makeSut = ():SutTypes => {
     }
   }
 
-  class AddAccountReposityStub implements AddAccountRepository {
+  class AddAccountReposityStub implements AddAccount {
     async createRow (accountData:AddAccountReceived):Promise<UserAccount> {
       const fakeAccount = {
         id: 1,

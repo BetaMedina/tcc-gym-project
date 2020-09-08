@@ -1,7 +1,7 @@
 import { Compare } from '@data/protocols/encrypter/encrypt'
 import { JwtAdapter } from '@data/protocols/encrypter/hash-jwt'
 import { LoadAccountByEmailRepository } from '@data/protocols/account/load-account-email'
-import { UserAccount } from '@domain/models/use-account'
+import { UserAccount } from '@domain/models/account/use-account'
 import { AuthenticationData } from './authenticate-data'
 
 interface SutTypes{

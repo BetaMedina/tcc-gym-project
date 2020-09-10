@@ -1,10 +1,10 @@
 import { ValidationComposite, RequiredFields, EmailValidator } from '@presentation/helpers/validators'
 
-import { Validation } from '../../../presentation/protocols/validation'
+import { Validation } from '@presentation/protocols/validation'
 import { EmailValidatorAdapter } from '@infra/adapters/validation/email-validator-adapter'
 import { makeLogInValidation } from './login-validation'
 
-jest.mock('../../../presentation/helpers/validators/validation-composite')
+jest.mock('../../../../presentation/helpers/validators/validation-composite')
 
 describe('LogIn Validation Factory', () => {
   it('Should call ValidationComposite with all correct values', () => {

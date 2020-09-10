@@ -1,10 +1,10 @@
 import { ValidationComposite, RequiredFields } from '@presentation/helpers/validators'
 
-import { Validation } from '../../../presentation/protocols/validation'
+import { Validation } from '@presentation/protocols/validation'
 
 import { makePlanValidation } from './plans-validation'
 
-jest.mock('../../../presentation/helpers/validators/validation-composite')
+jest.mock('../../../../presentation/helpers/validators/validation-composite')
 
 describe('SignUp Validation Factory', () => {
   it('Should call ValidationComposite with all correct values', () => {

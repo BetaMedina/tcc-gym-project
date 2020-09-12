@@ -1,6 +1,7 @@
 import { FindPlanCase } from '@domain/use-cases/plans/find-plan-db'
 import { UpdatePlanCase } from '@domain/use-cases/plans/update-plan-db'
 import { InvalidParamError, ControllerInterface, HttpRequest, HttpResponse, invalidParam } from '@presentation/controllers/plans/plans-protocols'
+import { ServerError } from '@presentation/errors'
 import { serverError, successResponse } from '@presentation/helpers/http/http-helper'
 
 export class PlansController implements ControllerInterface {
@@ -16,8 +17,7 @@ export class PlansController implements ControllerInterface {
       const updatedPlan = await this.updatePlan.update({ id, ...httpRequest.body })
       return successResponse(updatedPlan)
     } catch (err) {
-      console.log(err)
-      return serverError(err)
+      return serverError(new ServerError(err))
     }
   }
 }

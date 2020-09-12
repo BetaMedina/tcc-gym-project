@@ -17,8 +17,7 @@ export class SignUp implements ControllerInterface {
       await this.addAccount.create(httpRequest.body)
       return successResponse('User created with success')
     } catch (err) {
-      console.log(err)
-      return serverError(new ServerError(err))
+      return serverError(new ServerError(err.stack))
     }  
   }
 } 

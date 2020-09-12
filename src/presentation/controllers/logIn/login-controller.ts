@@ -16,8 +16,7 @@ export class LoginController implements ControllerInterface {
       }
       return successResponse(accessToken)
     } catch (err) {
-      console.log(err)
-      return serverError(new ServerError(err))
+      return serverError(new ServerError(err.stack))
     }
   }
 }

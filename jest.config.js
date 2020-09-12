@@ -10,7 +10,8 @@ module.exports = {
     '!<rootDir>/src/**/http/*.ts',
     '!<rootDir>/src/**/main/**/*.ts',
     '!<rootDir>/src/**/*config.ts',
-    '!<rootDir>/src/**/migrations/*.ts'
+    '!<rootDir>/src/**/migrations/*.ts',
+    '!<rootDir>/src/**/infra/db/**/*.ts'
 
   ],
   coverageDirectory: 'coverage',
@@ -18,7 +19,7 @@ module.exports = {
   transform: {
     '.+\\.ts$': 'ts-jest'
   },
-
+  testMatch: ['***/src/**/*.ts?(x)', '**/?(*.)(spec|test).ts?(x)'],
   moduleNameMapper: {
     '^@presentation/(.*)$': '<rootDir>/src/presentation/$1',
     '^@main/(.*)$': '<rootDir>/src/main/$1',

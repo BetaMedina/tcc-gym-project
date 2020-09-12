@@ -1,4 +1,5 @@
 import { AddPlanCase } from '@domain/use-cases/plans/add-plan-db'
+import { ServerError } from '@presentation/errors'
 import { ControllerInterface, HttpRequest, HttpResponse, Validation, invalidParam, serverError, successResponse } from '../plans-protocols'
 
 export class PlansController implements ControllerInterface {
@@ -13,8 +14,7 @@ export class PlansController implements ControllerInterface {
       const response = await this.createPlan.create(httpRequest.body)
       return successResponse(response)
     } catch (err) {
-      console.log(err)
-      return serverError(err.message)
+      return serverError(new ServerError(err.message))
     }
   }
 }

@@ -10,7 +10,7 @@ let connection: Connection
 
 describe('SignUp Routes', () => {
   beforeAll(async () => {
-    connection = await createConnection('medina_test')
+    connection = await createConnection()
     await connection.query('DELETE FROM users')
     const password = await bcrypt.hash('any_password', 10)
     await getRepository(Users).create({

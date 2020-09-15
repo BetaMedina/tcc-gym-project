@@ -8,7 +8,7 @@ let connection: Connection
 
 describe('SignUp Routes', () => {
   beforeAll(async () => {
-    connection = await createConnection('medina_test')
+    connection = await createConnection()
   })
   beforeEach(async () => {
     await connection.query('DELETE FROM users')

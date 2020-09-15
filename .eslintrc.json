@@ -22,6 +22,7 @@
       "no-trailing-spaces":"off",
       "no-useless-constructor":"off",
       "no-new": "off",
-      "no-unused-expressions": "off"
+      "no-unused-expressions": "off",
+      "camelcase":"off"
   }
 }

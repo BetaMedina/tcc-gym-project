@@ -1,24 +1,12 @@
-import { Plan } from '@domain/models/plans/plans'
-import { FindPlanCase, findPlanReceived } from '@domain/use-cases/plans/find-plan-db'
-import { UpdatePlanCase, UpdatePlanReceived } from '@domain/use-cases/plans/update-plan-db'
+import { FindPlanCase } from '@domain/use-cases/plans/find-plan-db'
 import { InvalidParamError } from '@presentation/errors'
-import { invalidParam, serverError, successResponse } from '@presentation/helpers/http/http-helper'
+import { invalidParam, serverError } from '@presentation/helpers/http/http-helper'
+import { FindPlanCaseStub } from '@presentation/tests'
 import { PlansController } from './plans-controller'
-
+import { mockPlanReadRequest } from '@presentation/tests/requests'
 interface SutTypes{
   findPlanSut : FindPlanCase
   sut : PlansController
-}
-
-class FindPlanCaseStub implements FindPlanCase {
-  async find (payload:findPlanReceived):Promise<Plan> {
-    return {
-      id: 1,
-      name: 'validPlan',
-      price: 99,
-      duration: '3 meses'
-    }
-  }
 }
 
 const makeSut = ():SutTypes => {
@@ -34,9 +22,7 @@ describe('=== Plans Read ===', () => {
   it('It is expected to receive a wrong plan and return http error ', async () => {
     const { sut, findPlanSut } = makeSut()
     jest.spyOn(findPlanSut, 'find').mockReturnValue(null)
-    const httpResponse = await sut.handle({
-      params: { id: 1 }
-    })
+    const httpResponse = await sut.handle(mockPlanReadRequest())
     
     expect(httpResponse).toEqual(invalidParam(new InvalidParamError('Plan not exist')))
   })
@@ -44,11 +30,7 @@ describe('=== Plans Read ===', () => {
     const { sut, findPlanSut } = makeSut()
     jest.spyOn(findPlanSut, 'find').mockImplementationOnce(() => { throw new Error('any_error') })
     
-    const payload = {
-      params: {
-        id: 1
-      }
-    } 
+    const payload = mockPlanReadRequest()
     const httpResponse = await sut.handle(payload)
     
     expect(httpResponse).toEqual(serverError(new Error('any_error')))
@@ -56,19 +38,12 @@ describe('=== Plans Read ===', () => {
 
   it('It is expected to receive a plan and update it ', async () => {
     const { sut } = makeSut()
-    
-    const payload = {
-      params: { id: 1 }
-     
-    } 
-    
+    const payload = mockPlanReadRequest()
     const httpResponse = await sut.handle(payload)
-    expect(httpResponse.body).toEqual({
-      id: 1,
-      name: 'validPlan',
-      price: 99,
-      duration: '3 meses'
-    })
+
+    expect(httpResponse.body.id).toBeTruthy()
+    expect(httpResponse.body.name).toBeTruthy()
+    expect(httpResponse.body.price).toBeTruthy()
     expect(httpResponse.statusCode).toBe(200)
   })
 })

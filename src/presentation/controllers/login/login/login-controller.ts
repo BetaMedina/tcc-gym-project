@@ -1,5 +1,5 @@
-import { ServerError, badRequest, serverError, successResponse, unauthorizedResponse, Authentication } from './login-protocols'
-import { ControllerInterface, HttpRequest, HttpResponse, Validation } from '../signUp/signUp-protocols'
+import { ServerError, badRequest, serverError, successResponse, unauthorizedResponse, Authentication, Validation } from './login-protocols'
+import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
 
 export class LoginController implements ControllerInterface {
   constructor (private readonly payloadValidation:Validation, private readonly authentication:Authentication) {}

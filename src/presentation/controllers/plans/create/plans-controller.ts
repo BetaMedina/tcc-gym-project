@@ -1,6 +1,7 @@
 import { AddPlanCase } from '@domain/use-cases/plans/add-plan-db'
 import { ServerError } from '@presentation/errors'
-import { ControllerInterface, HttpRequest, HttpResponse, Validation, invalidParam, serverError, successResponse } from '../plans-protocols'
+import { Validation, invalidParam, serverError, successResponse } from '../plans-protocols'
+import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
 
 export class PlansController implements ControllerInterface {
   constructor (private readonly payloadValidation:Validation, private readonly createPlan:AddPlanCase) { }

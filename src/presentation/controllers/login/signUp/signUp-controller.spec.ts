@@ -1,29 +1,14 @@
-import { ServerError } from '../../errors'
-import { AddAccount, AddAccountReceived } from '../../../data/protocols/account/add-account'
+import { ServerError } from '@presentation/errors'
 
-import { MissingParamError } from '../../errors/missingParam-error'
+import { MissingParamError } from '@presentation/errors/missingParam-error'
 import { SignUp } from './signUp-controller'
-import { UserAccount } from '../../../domain/models/account/use-account'
-import { Validation } from './signUp-protocols'
-import { AddAccountRepository } from '../plans/plans-protocols'
-
-// class EmailValidationStub
-class ValidatorStub implements Validation {
-  validate (input:any):Error {
-    return null
-  }
-}
-
-class AddAccountStub implements AddAccountRepository {
-  create (payload:AddAccountReceived):Promise<UserAccount> {
-    delete payload.password
-    return new Promise(resolve => resolve({ ...payload, id: 1 }))
-  }
-}
+import { Validation, AddAccountRepository } from './signUp-protocols'
+import { AddAccountStub, ValidatorStub } from '@presentation/tests'
+import { mockSignUpPostRequest } from '@presentation/tests/requests'
 
 export interface SutTypes{
   sut:SignUp,
-  validatorStub:ValidatorStub
+  validatorStub:Validation
   addAccountStub:AddAccountRepository
 }
 
@@ -44,14 +29,8 @@ describe('=== SignUpController TESTS ===', () => {
     
     jest.spyOn(validatorStub, 'validate').mockImplementationOnce(() => { throw new Error('any_error') })
     
-    const payload = {
-      body: {
-        password: 'validPassword',
-        name: 'validName',
-        email: 'notvalid@email.com',
-        confirmPassword: 'validPassword'
-      }
-    }
+    const payload = mockSignUpPostRequest()
+
     const httpResponse = await sut.handle(payload)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError('any_error'))
@@ -61,14 +40,7 @@ describe('=== SignUpController TESTS ===', () => {
      
     jest.spyOn(validatorStub, 'validate').mockImplementationOnce(() => { return new MissingParamError('password') })
       
-    const payload = {
-      body: {
-        password: '',
-        name: 'validName',
-        email: 'notvalid@email.com',
-        confirmPassword: 'validPassword'
-      }
-    }
+    const payload = mockSignUpPostRequest()
     const httpResponse = await sut.handle(payload)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('password'))
@@ -78,14 +50,7 @@ describe('=== SignUpController TESTS ===', () => {
     
     jest.spyOn(addAccountStub, 'create').mockImplementationOnce(() => { throw new Error('any_error') })
     
-    const payload = {
-      body: {
-        password: 'validPassword',
-        name: 'validName',
-        email: 'notvalid@email.com',
-        confirmPassword: 'validPassword'
-      }
-    }
+    const payload = mockSignUpPostRequest()
     const httpResponse = await sut.handle(payload)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError('any_error'))
@@ -93,14 +58,7 @@ describe('=== SignUpController TESTS ===', () => {
   it('Should be return success', async () => {
     const { sut } = makeSut()
     
-    const payload = {
-      body: {
-        password: 'validPassword',
-        name: 'validName',
-        email: 'notvalid@email.com',
-        confirmPassword: 'validPassword'
-      }
-    }
+    const payload = mockSignUpPostRequest()
     const httpResponse = await sut.handle(payload)
     expect(httpResponse.statusCode).toBe(200)
     expect(httpResponse.body).toEqual('User created with success')

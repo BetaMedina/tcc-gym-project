@@ -1,7 +1,7 @@
 import { ListPlansController } from './plans-controller'
-import { Plan } from '@domain/models/plans/plans'
 import { ListPlans } from '@domain/use-cases/plans/list-plan-db'
 import { emptyResponse, serverError } from '@presentation/helpers/http/http-helper'
+import { ListPlansStub } from '@presentation/tests'
 
 interface SutTypes { 
   listPlansSut:ListPlans
@@ -9,16 +9,6 @@ interface SutTypes {
 }
 
 const makeSut = ():SutTypes => {
-  class ListPlansStub implements ListPlans {
-    async list ():Promise<Plan[]> {
-      return [{
-        id: 1,
-        name: 'any_name',
-        price: 99,
-        duration: '3 m'
-      }]
-    }
-  }
   const listPlansSut = new ListPlansStub()
   const sut = new ListPlansController(listPlansSut)
 
@@ -48,11 +38,10 @@ describe('=== List Plans Controller ===', () => {
     const { sut } = makeSut()
 
     const httpResponse = await sut.handle()
-    expect(httpResponse.body).toEqual([{
-      id: 1,
-      name: 'any_name',
-      price: 99,
-      duration: '3 m'
-    }])
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body[0].id).toBeTruthy()
+    expect(httpResponse.body[0].name).toBeTruthy()
+    expect(httpResponse.body[0].price).toBeTruthy()
+    expect(httpResponse.body[0].duration).toBeTruthy()
   })
 })

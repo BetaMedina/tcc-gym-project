@@ -1,4 +1,4 @@
-import { LoginController } from '@presentation/controllers/logIn/login-controller'
+import { LoginController } from '@presentation/controllers/login/logIn/login-controller'
 import { AuthenticationData } from '@data/use-cases/account/authenticate/authenticate-data'
 import { Account } from '@infra/db/mysql/typeorm/repository/Account/account-repository'
 import { JsonWebTokenAdapter } from '@infra/adapters/cryptography/jsonwebtoken/jwt-adapter'

@@ -1,9 +1,8 @@
 import { DbAddAccount } from './addAccount-data'
-import { AddAccount, AddAccountReceived } from '@data/protocols/account/add-account'
-import { AddAccountRepository } from '@domain/use-cases/account/add-account-db'
-import { UserAccount } from '@domain/models/account/use-account'
+import { AddAccount } from '@data/protocols/account/add-account'
 import { Encrypter } from '@data/protocols/encrypter/encrypt'
-
+import { AddAccountReposityStub, HashStub } from '@data/tests'
+import { mockAccountModel, mockAccountParams } from '@domain/tests/mock-user-model'
 interface SutTypes {
   sut:DbAddAccount
   addAccountReposityStub:AddAccount
@@ -11,26 +10,8 @@ interface SutTypes {
 }
 
 const makeSut = ():SutTypes => {
-  class Hash implements Encrypter {
-    encrypt (plaintext: string):Promise<string> {
-      return new Promise(resolve => resolve('hashpassword'))
-    }
-  }
-
-  class AddAccountReposityStub implements AddAccount {
-    async createRow (accountData:AddAccountReceived):Promise<UserAccount> {
-      const fakeAccount = {
-        id: 1,
-        name: 'validName',
-        email: 'validMail',
-        password: 'hashedValue'
-      }
-      return new Promise(resolve => resolve(fakeAccount))
-    }
-  }
-
   const addAccountReposityStub = new AddAccountReposityStub()
-  const encryptSut = new Hash()
+  const encryptSut = new HashStub()
   const sut = new DbAddAccount(addAccountReposityStub, encryptSut)
   return {
     sut,
@@ -43,11 +24,7 @@ describe('DbAddAccount UseCase', () => {
   it('Should call addAccountRepositorie with correct password ', async () => {
     const { addAccountReposityStub, sut } = makeSut()
     const createSpy = jest.spyOn(addAccountReposityStub, 'createRow')
-    const accountData = {
-      name: 'validName',
-      email: 'validMail',
-      password: 'validPassword'
-    }
+    const accountData = mockAccountParams()
     await sut.create(accountData)
     expect(createSpy).toHaveBeenCalledWith({
       ...accountData,
@@ -58,11 +35,7 @@ describe('DbAddAccount UseCase', () => {
   it('Should throw if addAccountRepositorie throws ', async () => {
     const { addAccountReposityStub, sut } = makeSut()
     jest.spyOn(addAccountReposityStub, 'createRow').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const accountData = {
-      name: 'validName',
-      email: 'validMail',
-      password: 'validPassword'
-    }
+    const accountData = mockAccountParams()
     expect(sut.create(accountData)
     ).rejects.toThrow()
   })
@@ -70,11 +43,7 @@ describe('DbAddAccount UseCase', () => {
   it('Should throw if Hash throws ', async () => {
     const { sut, encryptSut } = makeSut()
     jest.spyOn(encryptSut, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const accountData = {
-      name: 'validName',
-      email: 'validMail',
-      password: 'validPassword'
-    }
+    const accountData = mockAccountParams()
     expect(sut.create(accountData)
     ).rejects.toThrow()
   })
@@ -82,28 +51,15 @@ describe('DbAddAccount UseCase', () => {
   it('Should hash if correct values ', async () => {
     const { sut, encryptSut } = makeSut()
     const spyHash = jest.spyOn(encryptSut, 'encrypt')
-    const accountData = {
-      name: 'validName',
-      email: 'validMail',
-      password: 'validPassword'
-    }
+    const accountData = mockAccountParams()
     await sut.create(accountData)
-    expect(spyHash).toBeCalledWith('validPassword')
+    expect(spyHash).toBeCalledWith(accountData.password)
   })
 
   it('Should return and account on success ', async () => {
-    const { addAccountReposityStub, sut } = makeSut()
-    const accountData = {
-      name: 'validName',
-      email: 'validMail',
-      password: 'validPassword'
-    }
+    const { sut } = makeSut()
+    const accountData = mockAccountParams()
     const account = await sut.create(accountData)
-    expect(account).toEqual({
-      id: 1,
-      name: 'validName',
-      email: 'validMail',
-      password: 'hashedValue'
-    })
+    expect(account).toEqual(mockAccountModel())
   })
 })

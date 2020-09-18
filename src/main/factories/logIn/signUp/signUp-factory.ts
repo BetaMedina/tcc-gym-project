@@ -1,4 +1,4 @@
-import { SignUp } from '@presentation/controllers/signUp/signUp-controller'
+import { SignUp } from '@presentation/controllers/login/signUp/signUp-controller'
 import { makeSignUpValidation } from './signUp-validation'
 import { DbAddAccount } from '@data/use-cases/account/add-account/addAccount-data'
 import { Account } from '@infra/db/mysql/typeorm/repository/Account/account-repository'

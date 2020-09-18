@@ -6,3 +6,7 @@ export interface Encrypter {
 export interface Compare {
   compare (plaintext: string, hashEncrypt:string):Promise<boolean>
 }
+
+export interface Decrypt {
+  decrypt (plaintext: string, hashEncrypt:string):Promise<boolean>
+}

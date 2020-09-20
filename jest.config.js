@@ -8,10 +8,12 @@ module.exports = {
     '!<rootDir>/src/**/*protocols.ts',
     '!<rootDir>/src/**/index.ts',
     '!<rootDir>/src/**/http/*.ts',
+    '!<rootDir>/src/**/errors/*.ts',
     '!<rootDir>/src/**/main/**/*.ts',
     '!<rootDir>/src/**/*config.ts',
     '!<rootDir>/src/**/migrations/*.ts',
-    '!<rootDir>/src/**/infra/db/**/*.ts'
+    '!<rootDir>/src/**/infra/db/**/*.ts',
+    '!<rootDir>/src/**/tests/**/*.ts'
 
   ],
   coverageDirectory: 'coverage',

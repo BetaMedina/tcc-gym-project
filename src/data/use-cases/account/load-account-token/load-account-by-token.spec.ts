@@ -1,12 +1,12 @@
 import { DbLoadAccountByToken } from './load-account-token'
-import { LoadAccountByTokenRepository } from '@data/protocols/account/load-account-by-id'
+import { LoadAccountByIdRepository } from '@data/protocols/account/load-account-by-id'
 import { Decrypter } from '@data/protocols/encrypter/decrypt'
 import { UserAccount } from '@domain/models/account/use-account'
 
 type SutTypes = {
   sut: DbLoadAccountByToken
   decrypterSut: Decrypter
-  loadAccountByTokenRepositorySpy: LoadAccountByTokenRepository
+  loadAccountByTokenRepositorySpy: LoadAccountByIdRepository
 }
 
 const makeSut = (): SutTypes => {
@@ -15,7 +15,7 @@ const makeSut = (): SutTypes => {
       return { id: 1 }
     }
   }
-  class LoadAccountByTokenStub implements LoadAccountByTokenRepository {
+  class LoadAccountByTokenStub implements LoadAccountByIdRepository {
     async loadById (id: number):Promise<UserAccount> {
       return {
         id: 1,

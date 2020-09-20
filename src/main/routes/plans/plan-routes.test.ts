@@ -9,7 +9,7 @@ let connection: Connection
 
 describe('SignUp Routes', () => {
   beforeAll(async () => {
-    connection = await createConnection()
+    connection = await createConnection('medina_test')
     await connection.query('DELETE FROM plans')
   })
   afterAll(async () => {

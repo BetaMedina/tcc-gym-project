@@ -1,5 +1,5 @@
-export interface UserPlanAccount{
+export interface UserPlanModel{
   id:Number,
-  id_user:number,
-  id_plan:number,
+  userId:number,
+  planId:number,
 }

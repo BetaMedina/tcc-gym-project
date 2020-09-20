@@ -1,9 +1,9 @@
-import { Decrypter, LoadAccountByTokenRepository, LoadAccountByToken, UserAccount } from './load-account-token-protocols'
+import { Decrypter, LoadAccountByIdRepository, LoadAccountByToken, UserAccount } from './load-account-token-protocols'
 
 export class DbLoadAccountByToken implements LoadAccountByToken {
   constructor (
     private readonly decrypter: Decrypter,
-    private readonly loadAccountByTokenRepository: LoadAccountByTokenRepository
+    private readonly loadAccountByTokenRepository: LoadAccountByIdRepository
   ) {}
 
   async load (accessToken: string): Promise<UserAccount> {

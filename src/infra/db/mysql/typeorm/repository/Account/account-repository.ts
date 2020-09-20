@@ -3,9 +3,9 @@ import { LoadAccountByEmailRepository } from '@data/protocols/account/load-accou
 import { Users } from '../../entities/users-entities'
 import { AddAccountReceived, AddAccount } from '@data/protocols/account/add-account'
 import { UserAccount } from '@domain/models/account/use-account'
-import { LoadAccountByTokenRepository } from '@data/protocols/account/load-account-by-id'
+import { LoadAccountByIdRepository } from '@data/protocols/account/load-account-by-id'
 
-export class Account implements AddAccount, LoadAccountByEmailRepository, LoadAccountByTokenRepository {
+export class Account implements AddAccount, LoadAccountByEmailRepository, LoadAccountByIdRepository {
   async createRow (payload: AddAccountReceived): Promise<UserAccount> {
     return getRepository(Users).create(payload).save()
   }

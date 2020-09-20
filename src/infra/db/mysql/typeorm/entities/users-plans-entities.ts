@@ -10,18 +10,18 @@ import {
 import { Plans } from './plans-entities'
 import { Users } from './users-entities'
 
-@Entity('users-plans')
+@Entity('users_plans')
 class UsersPlans extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: Number;
 
-  @OneToOne(type => Users)
+  @OneToOne(type => Users, { onDelete: 'CASCADE' })
   @JoinColumn()
-  user_id: Users;
-
-  @OneToOne(type => Plans)
+  user: Users;
+  
+  @OneToOne(type => Plans, { onDelete: 'CASCADE' })
   @JoinColumn()
-  plan_id: Plans;
+  plan: Plans;
 
   @CreateDateColumn() 
   createdAt: Date; 

@@ -1,13 +1,11 @@
-import { ReadPlanRepository } from '@data/protocols/plan/read-plan-db'
 import { Plan } from '@domain/models/plans/plans'
-import { FindUserCase, findUserReceived } from '@domain/use-cases/account/find-account-db'
 import { FindPlanCase, findPlanReceived } from '@domain/use-cases/plans/find-plan-db'
 import { UserAccount } from '@domain/models/account/use-account'
 import { InvalidParamError, NotFoundError, ServerError } from '@presentation/errors'
-import { badRequest, serverError, successResponse } from '@presentation/helpers/http/http-helper'
+import { badRequest, serverError } from '@presentation/helpers/http/http-helper'
 import { Validation } from '@presentation/protocols/validation'
 import { UsersPlans } from './users-plans'
-import { AddUserPlan, UserPlanReceveid } from '@domain/use-cases/users-plan/add-user-plan'
+import { AddUserPlan } from '@domain/use-cases/users-plan/add-user-plan'
 import { UserPlanModel } from '@domain/models/user-plans/users-plans'
 import { LoadAccountById } from '@domain/use-cases/account/load-account-by-id'
 
@@ -47,7 +45,7 @@ const makeSut = ():SutTypes => {
     }
   }
   class AddUserPlanStub implements AddUserPlan {
-    async create (payload:UserPlanReceveid):Promise<UserPlanModel> {
+    async create (user:UserAccount, plan:Plan):Promise<UserPlanModel> {
       return {
         id: 1,
         userId: 1,

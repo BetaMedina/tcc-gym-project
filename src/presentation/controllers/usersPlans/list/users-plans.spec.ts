@@ -1,5 +1,5 @@
 import { IListUserPlanModel } from '@domain/models/user-plans/list-users-plan'
-import { UserPlanModel, IListUsersPlans, serverError, ServerError } from './users-plan.protocols'
+import { IListUsersPlans, serverError, ServerError } from '../users-plans.protocols'
 import { ListUsersPlansController } from './users-plans'
 
 interface ISutTypes{

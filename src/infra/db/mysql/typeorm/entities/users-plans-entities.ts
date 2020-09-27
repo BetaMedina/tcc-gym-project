@@ -5,7 +5,9 @@ import {
   UpdateDateColumn,
   BaseEntity,
   OneToOne,
-  JoinColumn
+  JoinColumn,
+  OneToMany,
+  ManyToOne
 } from 'typeorm'
 import { Plans } from './plans-entities'
 import { Users } from './users-entities'
@@ -19,7 +21,7 @@ class UsersPlans extends BaseEntity {
   @JoinColumn()
   user: Users;
   
-  @OneToOne(type => Plans, { onDelete: 'CASCADE' })
+  @ManyToOne(type => Plans, { onDelete: 'CASCADE' })
   @JoinColumn()
   plan: Plans;
 

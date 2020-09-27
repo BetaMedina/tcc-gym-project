@@ -44,4 +44,27 @@ describe('User Plans Routes', () => {
     expect(response.body[0].user).toBeInstanceOf(Object)
     expect(response.body[0].plan).toBeInstanceOf(Object)
   })
+
+  test('Should update an user plan on success', async () => {
+    // const usersRepository = getRepository(model aqui);
+    await connection.query(`INSERT INTO users (id,name,createdAt,  
+      updatedAt, 
+      email,
+      password
+      ) VALUES (2,'users-plans',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'users-plans2@test.com','hashPassword')`)
+    await connection.query('INSERT INTO plans (id,name,price,duration,createdAt,updatedAt) VALUES (2,\'test-plan2\',89,\'15 dias\',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
+  
+    const payload = {
+      id: 2,
+      userId: 1,
+      planId: 1
+    }
+
+    await connection.query('INSERT INTO users_plans (id,createdAt,updatedAt,userId,planId) VALUES (2,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1,1)')
+
+    const response = await request(app).put('/api/user-plans').send(payload)
+    expect(response.statusCode).toBe(200)
+    expect(response.body.user).toBeInstanceOf(Object)
+    expect(response.body.plan).toBeInstanceOf(Object)
+  })
 })

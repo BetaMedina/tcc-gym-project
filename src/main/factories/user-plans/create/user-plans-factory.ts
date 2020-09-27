@@ -1,10 +1,10 @@
 import { UsersPlans } from '@presentation/controllers/usersPlans/create/users-plans'
-import { DbLoadAccountById } from '@data/use-cases/account/load-account-id/load-account-id'
 import { FindPlan } from '@data/use-cases/plans/read/read-plan'
+import { DbLoadAccountById } from '@data/use-cases/account/load-account-id/load-account-id'
 import { AddUserPlanCase } from '@data/use-cases/user-plan/create/add-user-plan'
 import { Account } from '@infra/db/mysql/typeorm/repository/Account/account-repository'
-import { UserPlanRepository } from '@infra/db/mysql/typeorm/repository/UserPlan/user-plan-repository'
 import { PlanRepository } from '@infra/db/mysql/typeorm/repository/Plan/plan-repository'
+import { UserPlanRepository } from '@infra/db/mysql/typeorm/repository/UserPlan/user-plan-repository'
 import { makeUserPlansValidation } from './user-plans-validation'
 
 import { LogMongoRepository } from '@infra/db/mongo/repository/log.repository'

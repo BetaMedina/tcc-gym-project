@@ -1,5 +1,7 @@
 
 import { IAddUserPlanRepository } from '@data/protocols/user-plan/add-user-plan'
+import { UserAccount } from '@domain/models/account/use-account'
+import { Plan } from '@domain/models/plans/plans'
 import { UserPlanModel } from '@domain/models/user-plans/users-plans'
 import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
 import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
@@ -9,16 +11,16 @@ interface SutTypes{
   addUserPlanSut:IAddUserPlanRepository
   sut:AddUserPlanCase
 }
-let User
-let Plan
+let UserRequest
+let PlanRequest
 
 const makeSut = ():SutTypes => {
   class AddUserPlanRepositoryStub implements IAddUserPlanRepository {
     async createRow (user:Users, plan:Plans):Promise<UserPlanModel> {
       return {
         id: 1,
-        userId: 1,
-        planId: 1
+        user: {} as UserAccount,
+        plan: {} as Plan
       }
     }
   }
@@ -32,7 +34,7 @@ const makeSut = ():SutTypes => {
 
 describe('=== ADD USER PLAN ===', () => {
   beforeEach(() => {
-    User = {
+    UserRequest = {
       id: 1,
       name: 'validName',
       email: 'validMail',
@@ -40,7 +42,7 @@ describe('=== ADD USER PLAN ===', () => {
       isAdmin: false 
     }
 
-    Plan = {
+    PlanRequest = {
       id: 1,
       name: 'validName',
       price: 10,
@@ -56,8 +58,8 @@ describe('=== ADD USER PLAN ===', () => {
       planId: 1
     }
 
-    await sut.create(User, Plan)
-    expect(spyPlan).toHaveBeenCalledWith(User, Plan)
+    await sut.create(UserRequest, PlanRequest)
+    expect(spyPlan).toHaveBeenCalledWith(UserRequest, PlanRequest)
   })
   it('Should expected to receveid correct parameters', async () => {
     const { addUserPlanSut, sut } = makeSut()
@@ -66,19 +68,16 @@ describe('=== ADD USER PLAN ===', () => {
       userId: 1,
       planId: 1
     }
-    expect(sut.create(User, Plan)).rejects.toThrow()
+    expect(sut.create(UserRequest, PlanRequest)).rejects.toThrow()
   })
   it('Should expected to return success', async () => {
     const { sut } = makeSut()
-    const payload = {
-      userId: 1,
-      planId: 1
-    }
-    const response = await sut.create(User, Plan)
+  
+    const response = await sut.create(UserRequest, PlanRequest)
     expect(response).toEqual({
       id: 1,
-      userId: 1,
-      planId: 1
+      plan: {},
+      user: {}
     })
   })
 })

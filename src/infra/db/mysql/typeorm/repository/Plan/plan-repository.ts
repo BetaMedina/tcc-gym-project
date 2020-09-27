@@ -2,7 +2,6 @@ import { getRepository } from 'typeorm'
 import { Plans } from '../../entities/plans-entities'
 import { AddPlanRepository, AddPlanReceived } from '@data/protocols/plan/add-plan-db'
 
-import { ListPlans } from '@domain/use-cases/plans/list-plan-db'
 import { Plan } from '@domain/models/plans/plans'
 import { ListPlansRepository } from '@data/protocols/plan/list-plan-db'
 import { ReadPlanRepository } from '@data/protocols/plan/read-plan-db'

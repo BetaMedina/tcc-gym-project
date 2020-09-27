@@ -1,13 +1,8 @@
-import { NotFoundError, ServerError } from '@presentation/errors'
+import { successResponse } from '@presentation/helpers/http/http-helper'
 import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
 import {
-  Validation,
-  LoadAccountById,
-  FindPlanCase,
-  AddUserPlan,
-  badRequest, 
-  serverError, 
-  successResponse
+  FindPlanCase, LoadAccountById, Validation, badRequest, 
+  NotFoundError, IUpdateUserPlan, ServerError, serverError 
 } from '../users-plans.protocols'
 
 export class UsersPlans implements ControllerInterface {
@@ -15,7 +10,7 @@ export class UsersPlans implements ControllerInterface {
     private readonly payloadValidation:Validation, 
     private readonly findPlan:FindPlanCase, 
     private readonly userAccount:LoadAccountById,
-    private readonly addUserPlan:AddUserPlan
+    private readonly updateUserPlan:IUpdateUserPlan
   ) {}
 
   async handle (httpRequest:HttpRequest):Promise<HttpResponse> {
@@ -32,11 +27,10 @@ export class UsersPlans implements ControllerInterface {
       if (!user) { 
         return badRequest(new NotFoundError('Id user'))
       }
-
-      const response = await this.addUserPlan.create(user, plan)
-      return successResponse(response)
+      const updateResponse = await this.updateUserPlan.update(httpRequest.body.id, user, plan) 
+      return successResponse(updateResponse)
     } catch (err) {
-      return serverError(new ServerError('Internal server error'))
+      return serverError(new ServerError(err.message))
     }
   }
 }

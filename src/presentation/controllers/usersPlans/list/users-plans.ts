@@ -1,4 +1,4 @@
-import { IListUsersPlans, emptyResponse } from './users-plan.protocols'
+import { IListUsersPlans, emptyResponse } from '../users-plans.protocols'
 import { ControllerInterface, HttpResponse } from '@presentation/protocols'
 import { serverError, successResponse } from '@presentation/helpers/http/http-helper'
 import { ServerError } from '@presentation/errors'
@@ -16,7 +16,6 @@ export class ListUsersPlansController implements ControllerInterface {
       }
       return successResponse(listUsers)
     } catch (err) {
-      console.log(err.message)
       return serverError(new ServerError(err.message))
     }
   }

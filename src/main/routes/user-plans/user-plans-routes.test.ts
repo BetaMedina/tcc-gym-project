@@ -67,4 +67,14 @@ describe('User Plans Routes', () => {
     expect(response.body.user).toBeInstanceOf(Object)
     expect(response.body.plan).toBeInstanceOf(Object)
   })
+  test('Should read an user plan on success', async () => {
+    await connection.query('INSERT INTO users_plans (id,createdAt,updatedAt,userId,planId) VALUES (2,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1,1)')
+
+    const response = await request(app).get('/api/user-plans/2').send()
+
+    expect(response.statusCode).toBe(200)
+    expect(response.body.user).toBeInstanceOf(Object)
+    expect(response.body.plan.name).toEqual('test-plan')
+    expect(response.body.user.name).toEqual('users-plans')
+  })
 })

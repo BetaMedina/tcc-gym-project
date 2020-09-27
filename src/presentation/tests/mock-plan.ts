@@ -27,10 +27,9 @@ export class FindPlanCaseStub implements FindPlanCase {
   async find (payload:findPlanReceived):Promise<Plan> {
     return {
       id: 1,
-      name: faker.internet.userName(),
-      price: faker.random.number(),
-      duration: faker.random.words()
-
+      name: 'validPlan',
+      price: 99,
+      duration: '3 meses'
     }
   }
 }

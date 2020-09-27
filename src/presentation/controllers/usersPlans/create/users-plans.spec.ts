@@ -1,17 +1,14 @@
 import { UsersPlans } from './users-plans'
 import {
   serverError,
-  Plan,
   FindPlanCase,
-  UserAccount,
   badRequest,
   Validation,
   AddUserPlan,
-  UserPlanModel,
-  LoadAccountById,
-  findPlanReceived
+  LoadAccountById
 } from '../users-plans.protocols'
-
+import { AddUserPlanStub, FindPlanCaseStub, FindUserStub, ValidatorStub } from '@presentation/tests'
+import { makeUserPlanRequest } from '@presentation/tests/requests'
 import { InvalidParamError, NotFoundError, ServerError } from '@presentation/errors'
 interface SutTypes{
   sut:UsersPlans,
@@ -22,44 +19,9 @@ interface SutTypes{
 }
 
 const makeSut = ():SutTypes => {
-  class ValidatorStub implements Validation {
-    validate (input:any):Error {
-      return null
-    }
-  }
-  class PlansCaseStub implements FindPlanCase {
-    async find (payload:findPlanReceived):Promise<Plan> {
-      return {
-        id: 1,
-        name: 'validPlan',
-        price: 99,
-        duration: '3 meses'
-      }
-    }
-  }
-  class UsersCaseStub implements LoadAccountById {
-    async load (payload:Number):Promise<UserAccount> {
-      return {
-        id: 1,
-        name: 'validName',
-        email: 'validMail',
-        password: 'validPass',
-        isAdmin: false 
-      }
-    }
-  }
-  class AddUserPlanStub implements AddUserPlan {
-    async create (user:UserAccount, plan:Plan):Promise<UserPlanModel> {
-      return {
-        id: 1,
-        user: {} as UserAccount,
-        plan: {} as Plan
-      }
-    }
-  }
   const addUserPlanSut = new AddUserPlanStub()
-  const usersCaseSut = new UsersCaseStub()
-  const plansCaseSut = new PlansCaseStub()
+  const usersCaseSut = new FindUserStub()
+  const plansCaseSut = new FindPlanCaseStub()
   const validationSut = new ValidatorStub()
   const sut = new UsersPlans(validationSut, plansCaseSut, usersCaseSut, addUserPlanSut)
   return { sut, validationSut, plansCaseSut, usersCaseSut, addUserPlanSut }
@@ -70,12 +32,7 @@ describe('=== USERS PLANS ===', () => {
     const { sut, validationSut } = makeSut()
     jest.spyOn(validationSut, 'validate').mockReturnValue(new InvalidParamError('userId'))
 
-    const payload = {
-      body: {
-        userId: 1,
-        planId: 1
-      }
-    }
+    const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('userId')))
@@ -84,12 +41,7 @@ describe('=== USERS PLANS ===', () => {
     const { sut, validationSut } = makeSut()
     jest.spyOn(validationSut, 'validate').mockReturnValue(new InvalidParamError('planId'))
 
-    const payload = {
-      body: {
-        userId: 1,
-        planId: 1
-      }
-    }
+    const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('planId')))
@@ -99,12 +51,7 @@ describe('=== USERS PLANS ===', () => {
 
     jest.spyOn(plansCaseSut, 'find').mockReturnValue(null)
 
-    const payload = {
-      body: {
-        userId: 1,
-        planId: 1
-      }
-    }
+    const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(badRequest(new NotFoundError('Id plan')))
@@ -114,12 +61,7 @@ describe('=== USERS PLANS ===', () => {
 
     jest.spyOn(usersCaseSut, 'load').mockReturnValue(null)
 
-    const payload = {
-      body: {
-        userId: 1,
-        planId: 1
-      }
-    }
+    const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(badRequest(new NotFoundError('Id user')))
@@ -129,12 +71,7 @@ describe('=== USERS PLANS ===', () => {
 
     jest.spyOn(usersCaseSut, 'load').mockImplementationOnce(() => { throw new Error() })
 
-    const payload = {
-      body: {
-        userId: 1,
-        planId: 1
-      }
-    }
+    const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(serverError(new ServerError('Internal server error')))
@@ -145,12 +82,7 @@ describe('=== USERS PLANS ===', () => {
 
     jest.spyOn(addUserPlanSut, 'create').mockImplementationOnce(() => { throw new Error() })
 
-    const payload = {
-      body: {
-        userId: 1,
-        planId: 1
-      }
-    }
+    const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(serverError(new ServerError('Internal server error')))
@@ -161,12 +93,7 @@ describe('=== USERS PLANS ===', () => {
 
     jest.spyOn(usersCaseSut, 'load').mockReturnValue(null)
 
-    const payload = {
-      body: {
-        userId: 1,
-        planId: 1
-      }
-    }
+    const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(badRequest(new NotFoundError('Id user')))
@@ -175,12 +102,7 @@ describe('=== USERS PLANS ===', () => {
   it('Should expected to return success on create', async () => {
     const { sut } = makeSut()
 
-    const payload = {
-      body: {
-        userId: 1,
-        planId: 1
-      }
-    }
+    const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse.statusCode).toEqual(200)

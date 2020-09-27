@@ -10,7 +10,6 @@ export class ReadUsersPlans implements ControllerInterface {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      console.log(httpRequest)
       const userPlan = await this.readUserAccount.find(httpRequest.params.id)
       if (!userPlan) {
         return badRequest(new NotFoundError('user plan'))

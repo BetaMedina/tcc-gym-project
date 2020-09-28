@@ -1,6 +1,6 @@
 import { IDeletePlan } from '@domain/use-cases/plans/delete-plan-db'
 import { NotFoundError, ServerError } from '@presentation/errors'
-import { PlanController } from './plans-controller'
+import { PlansController } from './plans-controller'
 
 class DeletePlanStub implements IDeletePlan {
   async delete (id:number):Promise<boolean> {
@@ -10,12 +10,12 @@ class DeletePlanStub implements IDeletePlan {
 
 interface ISutTypes{
   deletePlanSut:IDeletePlan,
-  sut:PlanController
+  sut:PlansController
 }
 
 const makeSut = ():ISutTypes => {
   const deletePlanSut = new DeletePlanStub()
-  const sut = new PlanController(deletePlanSut)
+  const sut = new PlansController(deletePlanSut)
   return {
     deletePlanSut,
     sut

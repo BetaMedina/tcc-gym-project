@@ -8,8 +8,9 @@ import { ReadPlanRepository } from '@data/protocols/plan/read-plan-db'
 import { UpdatePlanRepository } from '@data/protocols/plan/update-plan-db'
 import { findPlanReceived } from '@domain/use-cases/plans/find-plan-db'
 import { UpdatePlanReceived } from '@domain/use-cases/plans/update-plan-db'
+import { IDeletePlanRepository } from '@data/protocols/plan/delete-plan-db'
 
-export class PlanRepository implements AddPlanRepository, ListPlansRepository, ReadPlanRepository, UpdatePlanRepository {
+export class PlanRepository implements AddPlanRepository, ListPlansRepository, ReadPlanRepository, UpdatePlanRepository, IDeletePlanRepository {
   async createRow (payload:AddPlanReceived):Promise<Plan> {
     return getRepository(Plans).create(payload).save()
   }
@@ -24,5 +25,9 @@ export class PlanRepository implements AddPlanRepository, ListPlansRepository, R
 
   async updateRows (payload:UpdatePlanReceived):Promise<Plans> {
     return getRepository(Plans).save(payload)
+  }
+  
+  async deleteRow (id:number):Promise<boolean> {
+    return !!getRepository(Plans).delete({ id })
   }
 }

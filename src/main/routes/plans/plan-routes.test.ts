@@ -62,4 +62,14 @@ describe('SignUp Routes', () => {
     expect(response.body.price).toEqual(99.99)
     expect(response.body.duration).toEqual('15 dias')
   })
+  test('Should expected to return a new Plan', async () => {
+    const plan = await getRepository(Plans).create({
+      name: 'plan gold',
+      price: 99.99,
+      duration: '15 dias'
+    }).save()
+    const response = await request(app).delete(`/api/plan/${plan.id}`).send()
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toEqual('Plan has been deleted')
+  })
 })

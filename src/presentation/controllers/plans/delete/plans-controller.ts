@@ -3,7 +3,7 @@ import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/pr
 import { badRequest, serverError, successResponse } from '@presentation/helpers/http/http-helper'
 import { NotFoundError, ServerError } from '@presentation/errors'
 
-export class PlanController implements ControllerInterface {
+export class PlansController implements ControllerInterface {
   constructor (
     private readonly deletePlan:IDeletePlan
   ) {}

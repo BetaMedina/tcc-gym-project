@@ -7,7 +7,7 @@ let connection
 
 describe('User Plans Routes', () => {
   beforeAll(async () => {
-    connection = await createConnection()
+    connection = await createConnection('medina_test')
   })
   beforeEach(async () => {
     const password = await bcrypt.hash('any_password', 10)

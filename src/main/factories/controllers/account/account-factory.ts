@@ -1,4 +1,4 @@
-import { AccountController } from '@presentation/controllers/account/account-controller'
+import { AccountController } from '@presentation/controllers/account/delete/account-controller'
 
 import { LogMongoRepository } from '@infra/db/mongo/repository/log.repository'
 import { LogErrorDecorator } from '@main/decorators/log.decorator'

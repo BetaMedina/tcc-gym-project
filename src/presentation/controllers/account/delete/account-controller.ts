@@ -1,6 +1,5 @@
-import { IDeleteAccount } from './account-protocols'
+import { IDeleteAccount, badRequest, NotFoundError, ServerError, serverError, successResponse } from '../account-protocols'
 import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
-import { badRequest, NotFoundError, ServerError, serverError, successResponse } from '../plans/plans-protocols'
 
 export class AccountController implements ControllerInterface {
   constructor (private readonly deleteAccount:IDeleteAccount) {}

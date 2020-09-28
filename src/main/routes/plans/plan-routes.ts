@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { makePlansController, makeListPlansController, makeUpdatePlanController, makeReadPlanController } from '../../factories/plans'
+import { makePlansController, makeListPlansController, makeUpdatePlanController, makeReadPlanController } from '../../factories/controllers/plans'
 import { adaptRoute } from '../../adapters/express-router-adapter'
  
 export default (route: Router):void => {

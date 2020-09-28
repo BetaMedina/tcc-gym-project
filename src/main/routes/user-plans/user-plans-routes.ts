@@ -1,8 +1,5 @@
 import { Router } from 'express'
-import { makeUserPlansController } from '../../factories/user-plans/create/user-plans-factory'
-import { makeListUserPlans } from '../../factories/user-plans/list/user-plans-factory'
-import { makeUpdateUserPlans } from '../../factories/user-plans/update/user-plan-factory'
-import { makeReadUserPlans } from '../../factories/user-plans/read/user-plan-factory'
+import { makeUserPlansController, makeListUserPlans, makeUpdateUserPlans, makeReadUserPlans } from '../../factories/controllers/user-plans'
 import { adaptRoute } from '../../adapters/express-router-adapter'
  
 export default (route: Router):void => {

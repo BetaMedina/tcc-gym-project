@@ -5,6 +5,9 @@ import { ENUM } from '../cryptography-enum/enum-crypt'
 jest.mock('jsonwebtoken', () => ({
   async sign (): Promise<string> {
     return 'tokenGenerate'
+  },
+  async verify (): Promise<string> {
+    return 'decrypt'
   }
 }))
 
@@ -27,10 +30,20 @@ describe('JWT Adapter', () => {
       expect(hash).toBe('tokenGenerate')
     })
 
-    test('Should throw if hash throws', async () => {
+    it('Should throw if hash throws', async () => {
       const sut = makeSut()
       jest.spyOn(jwt, 'sign').mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error('any error'))))
       await expect(sut.hashGenerate(1)).rejects.toThrow()
+    })
+    it('Should decrypt throw jwt', async () => {
+      const sut = makeSut()
+      jest.spyOn(jwt, 'verify').mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error('any error'))))
+      await expect(sut.decrypt('hashCode')).rejects.toThrow()
+    })
+    it('Should return balid decrypt', async () => {
+      const sut = makeSut()
+      const decode = await sut.decrypt('hashCode')
+      expect(decode).toEqual('decrypt')
     })
   })
 })

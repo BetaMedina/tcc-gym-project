@@ -16,7 +16,7 @@ const makeInvalidWithOutHeaderRequest = () => ({
 })
 
 class DbLoadAccountByToken implements LoadAccountByToken {
-  async load (accessToken: string, role?: string):Promise<UserAccount> {
+  async load (accessToken: string, role?: boolean):Promise<UserAccount> {
     return {
       id: 3,
       name: 'validName',
@@ -49,7 +49,7 @@ describe('=== AUTH MIDDLEWARE === ', () => {
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
   })
   it('shoudl return error if header not pass', async () => {
-    const { sut, dbLoadAccountSut } = makeSut()
+    const { sut } = makeSut()
     const httpResponse = await sut.handle(makePayloadRequest())
     expect(httpResponse).toEqual(successResponse({ accountId: 3 }))
   })
@@ -65,7 +65,7 @@ describe('=== AUTH MIDDLEWARE === ', () => {
     const params = jest.spyOn(dbLoadAccountSut, 'load')
 
     await sut.handle(makePayloadRequest())
-    expect(params).toBeCalledWith(makePayloadRequest().headers['x-access-token'])
+    expect(params).toBeCalledWith(makePayloadRequest().headers['x-access-token'], undefined)
   })
   it('shoudl return error if header not pass', async () => {
     const { sut, dbLoadAccountSut } = makeSut()

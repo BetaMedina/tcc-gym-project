@@ -61,6 +61,18 @@ describe('DbLoadAccountByToken Usecase', () => {
     const response = await sut.load('hashPass')
     expect(response).toBe(null)
   })
+  it('Should retur null if user is not admin', async () => {
+    const { sut, loadAccountByTokenRepositorySpy } = makeSut()
+    jest.spyOn(loadAccountByTokenRepositorySpy, 'loadById').mockReturnValue((Promise.resolve({
+      id: 2,
+      name: 'validName',
+      email: 'validMail',
+      password: 'validPass',
+      isAdmin: true 
+    }))) 
+    const response = await sut.load('hashPass', true)
+    expect(response).toBe(null)
+  })
   it('Should receveid user model', async () => {
     const { sut } = makeSut()
     const response = await sut.load('hashPass')

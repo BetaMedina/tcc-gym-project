@@ -6,10 +6,13 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
     private readonly loadAccountByTokenRepository: LoadAccountByIdRepository
   ) {}
 
-  async load (accessToken: string): Promise<UserAccount> {
+  async load (accessToken: string, admin?:boolean): Promise<UserAccount> {
     try {
       const decrypt = await this.decrypter.decrypt(accessToken)
       if (!decrypt) {
+        return null
+      }
+      if (admin && !decrypt.isAdmin) {
         return null
       }
       return this.loadAccountByTokenRepository.loadById(decrypt.id)

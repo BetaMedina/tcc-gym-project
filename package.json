@@ -8,7 +8,8 @@
     "test:watch": "set NODE_ENV=test && npx jest --passWithNoTests  --noStackTrace --runInBand --no-cache --watch",
     "test:ci": "set NODE_ENV=test && npm run test -- --coverage",
     "dev": "set NODE_ENV=dev && ts-node-dev -r tsconfig-paths/register src/main/server.ts",
-    "typeorm:test": " node --require ts-node/register ./node_modules/typeorm/cli.js"
+    "typeorm:test": "set NODE_ENV=test && node --require ts-node/register ./node_modules/typeorm/cli.js",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"    
   },
   "keywords": [],
   "author": "",

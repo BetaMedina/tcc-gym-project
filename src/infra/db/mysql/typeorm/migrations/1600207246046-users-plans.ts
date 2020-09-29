@@ -36,13 +36,13 @@ export class usersPlans1600207246046 implements MigrationInterface {
           }
         ]
       }))
-    await queryRunner.createForeignKey('users-plans', new TableForeignKey({
+    await queryRunner.createForeignKey('users_plans', new TableForeignKey({
       columnNames: ['user_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'users',
       onDelete: 'CASCADE'
     }))
-    await queryRunner.createForeignKey('users-plans', new TableForeignKey({
+    await queryRunner.createForeignKey('users_plans', new TableForeignKey({
       columnNames: ['plan_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'plans',
@@ -51,6 +51,6 @@ export class usersPlans1600207246046 implements MigrationInterface {
   }
 
   public async down (queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users-plans')
+    await queryRunner.dropTable('users_plans')
   }
 }

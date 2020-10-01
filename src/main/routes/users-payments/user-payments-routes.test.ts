@@ -6,26 +6,30 @@ import request from 'supertest'
 import { Connection, getRepository } from 'typeorm'
 
 let connection: Connection
-
+let user
+let plan
 describe('User Payments Routes', () => {
   beforeEach(async () => {
     connection = await createConnection('medina_test')
     await connection.query('delete from users')
     await connection.query('delete from plans')
     await connection.query('delete from users_payments')
-  })
-  it('Should return an User Payment on success', async () => {
-    const user = await getRepository(Users).create({
+    user = await getRepository(Users).create({
       name: 'new-account',
       email: 'userPayments@gmail.com',
       password: 'validPass'
     }).save()
-    const plan = await getRepository(Plans).create({
+    plan = await getRepository(Plans).create({
       name: 'validPlan',
       price: 99,
       duration: 'validDuration'
     }).save()
-
+  })
+  afterAll(async () => {
+    await connection.close()
+  })
+  
+  test('Should return an User Payment on success', async () => {
     const payload = {
       userId: user.id,
       planId: plan.id,
@@ -34,6 +38,19 @@ describe('User Payments Routes', () => {
       paymentDate: new Date()
     }
     const response = await request(app).post('/api/user-payment').send(payload)
+    expect(response.statusCode).toBe(200)
+  })
+})
+
+describe('User Payments List routes', () => {
+  beforeEach(async () => {
+    connection = await createConnection('medina_test')
+  })
+  afterAll(async () => {
+    await connection.close()
+  })
+  test('Should return an User Payment on success', async () => {
+    const response = await request(app).get('/api/user-payment').send()
     expect(response.statusCode).toBe(200)
   })
 })

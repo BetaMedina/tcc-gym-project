@@ -32,7 +32,7 @@ const makeSut = ():ISutTypes => {
     sut
   }
 }
-describe('=== List Users Plans ===', () => {
+describe('=== User Payments Controller ===', () => {
   it('Should expected to return error if list users return empty', async () => {
     const { listUserPaymentsSut, sut } = makeSut()
     jest.spyOn(listUserPaymentsSut, 'list').mockReturnValueOnce(Promise.resolve([]))

@@ -5,7 +5,8 @@ export default async (defaultDatabase = 'medina_test'): Promise<Connection> => {
   const database = defaultDatabase
   return createConnection(
     Object.assign(defaultOptions, {
-      database
+      database,
+      keepConnectionAlive: true
     })
   )
 }

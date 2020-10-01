@@ -50,3 +50,20 @@ CREATE TABLE `users_plans` (
 
 LOCK TABLES `users_plans` WRITE;
 UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS `users_payments`;
+CREATE TABLE `users_payments` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `plan_id` int NOT NULL,
+  `payment_value` int NOT NULL,
+  `payment_type` varchar(255) NOT NULL,
+  `payment_date` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+LOCK TABLES `users_payments` WRITE;
+UNLOCK TABLES;

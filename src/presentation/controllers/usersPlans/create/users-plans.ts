@@ -32,7 +32,7 @@ export class UsersPlans implements ControllerInterface {
       if (!user) { 
         return badRequest(new NotFoundError('Id user'))
       }
-
+      
       const response = await this.addUserPlan.create(user, plan)
       return successResponse(response)
     } catch (err) {

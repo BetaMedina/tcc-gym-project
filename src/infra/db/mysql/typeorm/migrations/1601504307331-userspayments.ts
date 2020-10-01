@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
 
-export class usersPlans1600207246046 implements MigrationInterface {
+export class userspayments1601504307331 implements MigrationInterface {
   public async up (queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users_plans',
+        name: 'users_payments',
         columns: [
           {
             name: 'id',
@@ -20,6 +20,21 @@ export class usersPlans1600207246046 implements MigrationInterface {
           {
             name: 'plan_id',
             type: 'integer',
+            isNullable: false
+          },
+          {
+            name: 'payment_value',
+            type: 'integer',
+            isNullable: false
+          },
+          {
+            name: 'payment_type',
+            type: 'varchar',
+            isNullable: false
+          },
+          {
+            name: 'payment_date',
+            type: 'timestamp',
             isNullable: false
           },
           {
@@ -40,19 +55,22 @@ export class usersPlans1600207246046 implements MigrationInterface {
       columnNames: ['user_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'users',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      name: 'userpayment_user'
+
     }))
     await queryRunner.createForeignKey('users_plans', new TableForeignKey({
       columnNames: ['plan_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'plans',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      name: 'userpayment_plan'
     }))
   }
 
   public async down (queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('users_plans', 'user_id')
-    await queryRunner.dropForeignKey('users_plans', 'plan_id')
-    await queryRunner.dropTable('users_plans')
-  }
+    await queryRunner.dropForeignKey('users_payments', 'user_id')
+    await queryRunner.dropForeignKey('users_payments', 'plan_id')
+    await queryRunner.dropTable('users_payments')
+  } 
 }

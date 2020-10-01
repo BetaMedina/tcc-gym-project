@@ -1,4 +1,3 @@
-import { Timestamp } from 'typeorm'
 
 export interface UserAccount{
   id:Number,

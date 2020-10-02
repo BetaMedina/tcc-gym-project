@@ -1,6 +1,7 @@
 
 import { IAddUserPaymentRepository } from '@data/protocols/users-payments/add-user-payment'
 import { IListUserPaymentRepository } from '@data/protocols/users-payments/list-user-payments'
+import { IReadUserPaymentRepository } from '@data/protocols/users-payments/read-user-payment'
 import { IUpdateUserPaymentRepository } from '@data/protocols/users-payments/update-user-payment'
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
 import { IAddUserPaymentReceived, IUserPayment } from '@domain/use-cases/users-payments/add-users-payments'
@@ -9,7 +10,7 @@ import { Plans } from '../../entities/plans-entities'
 import { Users } from '../../entities/users-entities'
 import { UsersPayments } from '../../entities/users-payments'
 
-export class UserPaymentRepository implements IAddUserPaymentRepository, IListUserPaymentRepository, IUpdateUserPaymentRepository {
+export class UserPaymentRepository implements IAddUserPaymentRepository, IListUserPaymentRepository, IUpdateUserPaymentRepository, IReadUserPaymentRepository {
   async createRow (payload:IAddUserPaymentReceived):Promise<IUsersPaymentsModel> {
     const userPayment = new UsersPayments()
     userPayment.user = payload.user as Users
@@ -33,5 +34,11 @@ export class UserPaymentRepository implements IAddUserPaymentRepository, IListUs
     userPayment.payment_value = payload.paymentValue
     userPayment.payment_date = payload.paymentDate
     return !!getRepository(UsersPayments).save(userPayment)
+  }
+
+  async readRow (id:string):Promise<IUsersPaymentsModel> {
+    const response = await getRepository(UsersPayments).findOne({ relations: ['user', 'plan'], where: { id } })
+    console.log(response)
+    return response
   }
 }

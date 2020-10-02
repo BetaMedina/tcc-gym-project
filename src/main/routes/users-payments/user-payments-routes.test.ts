@@ -2,9 +2,9 @@ import createConnection from '@infra/db/mysql/typeorm/conn/typeorm-conn'
 import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
 import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
 import { UsersPayments } from '@infra/db/mysql/typeorm/entities/users-payments'
+import { Connection, getRepository } from 'typeorm'
 import app from '@main/config/app'
 import request from 'supertest'
-import { Connection, getRepository } from 'typeorm'
 
 let connection: Connection
 let user, plan, Payment

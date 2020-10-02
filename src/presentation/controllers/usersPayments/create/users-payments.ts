@@ -1,5 +1,5 @@
-import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
 import { LoadAccountById, FindPlanCase, IUserPayment, NotFoundError, ServerError, badRequest, serverError, successResponse, Validation } from '../users-plans.protocols'
+import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
 export class UsersPayments implements ControllerInterface {
   constructor (
     private readonly payloadValidation:Validation,

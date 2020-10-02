@@ -13,7 +13,6 @@ describe('User Plans Routes', () => {
     const password = await bcrypt.hash('any_password', 10)
     await connection.query('DELETE FROM plans')
     await connection.query('DELETE FROM users')
-    await connection.query('DELETE FROM users_plans')
     await connection.query(`INSERT INTO users (id,name,createdAt,  
     updatedAt, 
     email,

@@ -1,7 +1,5 @@
-import { IListUsersPayments } from '@domain/use-cases/users-payments/list-users-payments'
-import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
-import { emptyResponse, serverError, successResponse } from '@presentation/helpers/http/http-helper'
-import { ServerError } from '@presentation/errors'
+import { ControllerInterface, HttpResponse } from '@presentation/protocols'
+import { ServerError, emptyResponse, serverError, successResponse, IListUsersPayments } from '../users-plans.protocols'
 export class ListUsersPayments implements ControllerInterface {
   constructor (private readonly listUsersPayments:IListUsersPayments) {}
   async handle (): Promise<HttpResponse> {

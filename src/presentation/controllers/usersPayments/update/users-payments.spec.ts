@@ -1,23 +1,14 @@
 import { UserAccount } from '@domain/models/account/use-account'
 import { Plan } from '@domain/models/plans/plans'
-import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
-import { FindUserCase, findUserReceived } from '@domain/use-cases/account/find-account-db'
 import { LoadAccountById } from '@domain/use-cases/account/load-account-by-id'
 import { FindPlanCase, findPlanReceived } from '@domain/use-cases/plans/find-plan-db'
-import { IAddUserPaymentReceived, IUserPayment } from '@domain/use-cases/users-payments/add-users-payments'
-import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
+import { IUpdateUserPayment, IUpdateUserPaymentReceived } from '@domain/use-cases/users-payments/update-users-payments'
 import { InvalidParamError, NotFoundError, ServerError } from '@presentation/errors'
 import { badRequest, serverError, successResponse } from '@presentation/helpers/http/http-helper'
 import { ValidatorStub } from '@presentation/tests'
-import { UsersPayments } from './users-payments'
+import { UpdateUsersPayments } from './user-payments'
 
 const date = new Date()
-interface ISutTypes{
-  sut:UsersPayments,
-  validateSut:ValidatorStub,
-  findUserSut:LoadAccountById,
-  findPlanSut:FindPlanCase
-}
 
 class FindUserStub implements LoadAccountById {
   async load (id:Number):Promise<UserAccount> {
@@ -41,31 +32,26 @@ class FindPlanStub implements FindPlanCase {
     }
   }
 }
-class CreateUserPaymentStub implements IUserPayment {
-  async create (payload:IAddUserPaymentReceived): Promise<IUsersPaymentsModel> {
-    return {
-      id: 1,
-      user: {} as Users,
-      plan: {} as Plan,
-      payment_value: 99,
-      payment_type: 'boleto',
-      payment_date: date
-    }
+
+class UpdateUserPaymentStub implements IUpdateUserPayment {
+  async update (payload:IUpdateUserPaymentReceived):Promise<boolean> {
+    return true
   }
 }
 
-const makeSut = ():ISutTypes => {
+const makeSut = () => {
   const validateSut = new ValidatorStub()
   const findUserSut = new FindUserStub()
   const findPlanSut = new FindPlanStub()
-  const createUserPayment = new CreateUserPaymentStub()
-  const sut = new UsersPayments(validateSut, findUserSut, findPlanSut, createUserPayment)
+  const userUpdateSut = new UpdateUserPaymentStub()
+  const sut = new UpdateUsersPayments(validateSut, findUserSut, findPlanSut, userUpdateSut)
   return {
-    sut, validateSut, findUserSut, findPlanSut
+    sut, validateSut, findUserSut, findPlanSut, userUpdateSut
   }
 }
 
 const makeUsersPaymentsRequest = () => ({
+  params: { id: 1 },
   body: {
     user_id: 1, 
     plan_id: 1, 
@@ -75,8 +61,8 @@ const makeUsersPaymentsRequest = () => ({
   }
 })
 
-describe('=== Users Payments ===', () => {
-  it('should expect to return error if user_id not have been pass', async () => {
+describe('=== Update user payments ===', () => {
+  it('should return error if validation throw', async () => {
     const { sut, validateSut } = makeSut()
     const payload = makeUsersPaymentsRequest()
 
@@ -132,18 +118,19 @@ describe('=== Users Payments ===', () => {
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(serverError(new ServerError('any_error')))
   })
-  it('Should expected to return succes', async () => {
+  it('should expect to return success', async () => {
     const { sut } = makeSut()
     const payload = makeUsersPaymentsRequest()
 
     const httpResponse = await sut.handle(payload)
-    expect(httpResponse).toEqual(successResponse({
-      id: 1,
-      user: {},
-      plan: {},
-      payment_value: 99,
-      payment_type: 'boleto',
-      payment_date: date
-    }))
+    expect(httpResponse).toEqual(successResponse('User Payment updated success'))
+  })
+  it('should expect to return success', async () => {
+    const { sut, userUpdateSut } = makeSut()
+    const payload = makeUsersPaymentsRequest()
+    jest.spyOn(userUpdateSut, 'update').mockImplementationOnce(() => { throw new Error('any_error') })
+
+    const httpResponse = await sut.handle(payload)
+    expect(httpResponse).toEqual(serverError(new ServerError('any_error')))
   })
 })

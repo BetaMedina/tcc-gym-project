@@ -3,6 +3,7 @@ import { Plan } from '@domain/models/plans/plans'
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
 
 export interface IAddUserPaymentReceived{
+  id?:Number,
   user:UserAccount, 
   plan:Plan,
   paymentValue:Number,

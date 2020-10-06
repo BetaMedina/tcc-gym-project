@@ -18,7 +18,7 @@ export class ListPlansStub implements ListPlans {
       id: faker.random.number(),
       name: faker.internet.userName(),
       price: faker.random.number(),
-      duration: faker.random.words()
+      duration: faker.random.number()
     }]
   }
 }
@@ -29,7 +29,7 @@ export class FindPlanCaseStub implements FindPlanCase {
       id: 1,
       name: 'validPlan',
       price: 99,
-      duration: '3 meses'
+      duration: 15
     }
   }
 }

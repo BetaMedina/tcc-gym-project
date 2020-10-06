@@ -7,7 +7,7 @@ CREATE TABLE `plans` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `price` float NOT NULL,
-  `duration` varchar(255) NOT NULL,
+  `duration` float NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
+  `age` int NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',

@@ -19,12 +19,11 @@ describe('SignUp Routes', () => {
   })
   
   test('Should return an account on success', async () => {
-    // const usersRepository = getRepository(model aqui);
-
     const payload = {
       name: 'validName',
       email: 'notvalid@email.com',
       password: 'validPassword',
+      age: 18,
       passwordConfirm: 'validPassword'
 
     }

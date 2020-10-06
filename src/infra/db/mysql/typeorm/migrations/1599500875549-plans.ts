@@ -24,7 +24,7 @@ export class plans1599500875549 implements MigrationInterface {
           },
           {
             name: 'duration',
-            type: 'varchar',
+            type: 'float',
             isNullable: false
           },
           {

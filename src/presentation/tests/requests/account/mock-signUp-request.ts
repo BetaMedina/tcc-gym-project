@@ -5,6 +5,7 @@ export const mockSignUpPostRequest = ():HttpRequest => ({
     password: 'validPassword',
     name: 'validName',
     email: 'notvalid@email.com',
-    confirmPassword: 'validPassword'
+    confirmPassword: 'validPassword',
+    age: 18
   }
 })

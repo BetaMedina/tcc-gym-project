@@ -28,7 +28,7 @@ class FindPlanStub implements FindPlanCase {
       id: 1,
       name: 'validName',
       price: 99,
-      duration: 'validDuration'
+      duration: 15
     }
   }
 }

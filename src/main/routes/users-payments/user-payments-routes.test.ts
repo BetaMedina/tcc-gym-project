@@ -18,12 +18,13 @@ describe('User Payments Routes', () => {
     user = await getRepository(Users).create({
       name: 'new-account',
       email: 'userPayments@gmail.com',
-      password: 'validPass'
+      password: 'validPass',
+      age: 18
     }).save()
     plan = await getRepository(Plans).create({
       name: 'validPlan',
       price: 99,
-      duration: 'validDuration'
+      duration: 15
     }).save()
   })
   afterAll(async () => {

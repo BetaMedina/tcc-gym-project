@@ -19,7 +19,8 @@ export class AuthenticationData implements Authentication {
     const encryptToken = await this.jwtAdapter.hashGenerate(Number(dbResponse.id))
     return {
       accessToken: encryptToken,
-      name: dbResponse.name
+      name: dbResponse.name,
+      isAdmin:dbResponse.isAdmin
     }
   }
 }

@@ -75,7 +75,8 @@ describe('=== Authenticate Data ===', () => {
     const response = await sut.auth(payload)
     expect(response).toEqual({
       accessToken: 'hashedPassword',
-      name: 'valid_name'
+      name: 'valid_name',
+      isAdmin:false
     })
   })
 })

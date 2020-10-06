@@ -22,7 +22,7 @@ class ListUsersPlans implements IListUsersPlans {
         id: 1,
         name: 'validName',
         price: 55,
-        duration: 'validDuration'
+        duration: 15
       }
     }]
   }

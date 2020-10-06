@@ -4,7 +4,7 @@ export interface UpdatePlanReceived{
   id:Number,
   name:string,
   price:Number,
-  duration:string
+  duration:Number
 }
 
 export interface UpdatePlanCase{

@@ -16,7 +16,8 @@ export const mockAccountParams = ():AddAccountParams => ({
   name: faker.internet.userName(),
   email: faker.internet.email(),
   password: faker.internet.password(),
-  isAdmin: faker.random.boolean() 
+  isAdmin: faker.random.boolean(),
+  age: faker.random.number()
 })
 
 export const mockAuthenticationParams = ():AuthenticationParams => ({
@@ -26,5 +27,6 @@ export const mockAuthenticationParams = ():AuthenticationParams => ({
 
 export const mockAuthenticationModel = ():AuthenticationModel => ({
   accessToken: faker.random.word(),
-  name: faker.internet.userName()
+  name: faker.internet.userName(),
+  isAdmin: false
 })

@@ -15,6 +15,7 @@ describe('SignUp Routes', () => {
     const password = await bcrypt.hash('any_password', 10)
     await getRepository(Users).create({
       name: 'new-account',
+      age: 18,
       email: 'account@gmail.com',
       password
     }).save()

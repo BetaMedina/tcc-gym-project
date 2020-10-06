@@ -14,7 +14,7 @@ const makeSut = ():SutTypes => {
         id: 1,
         name: 'any_name',
         price: 99,
-        duration: '3 m'
+        duration: 3
       }
     }
   }
@@ -34,7 +34,7 @@ describe('=== Update Plans Use Case ===', () => {
       id: 1,
       name: 'any_name',
       price: 99,
-      duration: '3 m'
+      duration: 3
     }
     jest.spyOn(updatePlanSut, 'updateRows').mockImplementationOnce(() => { throw new Error('any_error') })
     expect(sut.update(payload)).rejects.toThrow()
@@ -45,14 +45,14 @@ describe('=== Update Plans Use Case ===', () => {
       id: 1,
       name: 'old_name',
       price: 99,
-      duration: '3 m'
+      duration: 3
     }
     const httpResponse = await sut.update(payload)
     expect(httpResponse).toEqual({
       id: 1,
       name: 'any_name',
       price: 99,
-      duration: '3 m'
+      duration: 3
     })
   })
 })

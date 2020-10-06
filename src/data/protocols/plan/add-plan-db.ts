@@ -2,7 +2,7 @@ import { Plan } from '@domain/models/plans/plans'
 export interface AddPlanReceived{
   name:string,
   price:Number,
-  duration:string
+  duration:Number
 }
 export interface AddPlanRepository{
   createRow (account:AddPlanReceived):Promise<Plan> 

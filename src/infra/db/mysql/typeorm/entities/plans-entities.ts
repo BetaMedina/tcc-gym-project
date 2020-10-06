@@ -18,8 +18,8 @@ class Plans extends BaseEntity {
   @Column({ type: 'float', precision: 10, scale: 2 })
   price: Number;
   
-  @Column('varchar')
-  duration: string;
+  @Column({ type: 'float', precision: 10, scale: 1 })
+  duration: Number;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -14,7 +14,7 @@ const makeSut = ():SutTypes => {
         id: 1,
         name: 'any_name',
         price: 99,
-        duration: '3 m'
+        duration: 3
       }
     }
   }
@@ -46,7 +46,7 @@ describe('=== List Plan Use Case ===', () => {
       id: 1,
       name: 'any_name',
       price: 99,
-      duration: '3 m'
+      duration: 3
     })
   })
 })

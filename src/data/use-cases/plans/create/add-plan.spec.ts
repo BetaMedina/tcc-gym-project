@@ -14,7 +14,7 @@ const makeSut = ():SutTypes => {
         id: 1,
         name: 'validName',
         price: 99.99,
-        duration: '15 dias'
+        duration: 2
       }))
     }
   }
@@ -33,13 +33,13 @@ describe('=== ADD PLAN ===', () => {
     const payload = {
       name: 'validName',
       price: 99.99,
-      duration: '15 dias'
+      duration: 2
     }
     await sut.create(payload)
     expect(spyPlan).toHaveBeenCalledWith({
       name: 'validName',
       price: 99.99,
-      duration: '15 dias'
+      duration: 2
     })
   })
   it('Should expected to return success', async () => {
@@ -47,14 +47,14 @@ describe('=== ADD PLAN ===', () => {
     const payload = {
       name: 'validName',
       price: 99.99,
-      duration: '15 dias'
+      duration: 2
     }
     const response = await sut.create(payload)
     expect(response).toEqual({
       id: 1,
       name: 'validName',
       price: 99.99,
-      duration: '15 dias'
+      duration: 2
     })
   })
 })

@@ -18,6 +18,11 @@ export class users1599178886981 implements MigrationInterface {
             isNullable: false
           },
           {
+            name: 'age',
+            type: 'integer',
+            isNullable: false
+          },
+          {
             name: 'email',
             type: 'varchar',
             isNullable: false,

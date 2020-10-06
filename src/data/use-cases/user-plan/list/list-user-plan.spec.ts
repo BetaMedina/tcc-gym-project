@@ -21,7 +21,7 @@ class ListUserPlanRepository implements IListUserPlanRepository {
         id: 1,
         name: 'validName',
         price: 55,
-        duration: 'validDuration'
+        duration: 15
       }
     }]
   }

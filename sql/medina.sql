@@ -7,15 +7,15 @@ CREATE TABLE `plans` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `price` float NOT NULL,
-  `duration` varchar(255) NOT NULL,
+  `duration` float NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO plans (`id`,`name`,`price`,`duration`,`created_at`,`updated_at`) VALUES (1,'Silver', 69.99, '1 m', NOW(), NOW());
-INSERT INTO plans (`id`,`name`,`price`,`duration`,`created_at`,`updated_at`) VALUES (2,'Gold', 79.99, '2 m', NOW(), NOW());
-INSERT INTO plans (`id`,`name`,`price`,`duration`,`created_at`,`updated_at`) VALUES (3,'Diamond', 89.99, '3 m', NOW(), NOW());
+INSERT INTO plans (`id`,`name`,`price`,`duration`,`created_at`,`updated_at`) VALUES (1,'Silver', 69.99, 1, NOW(), NOW());
+INSERT INTO plans (`id`,`name`,`price`,`duration`,`created_at`,`updated_at`) VALUES (2,'Gold', 79.99, 2, NOW(), NOW());
+INSERT INTO plans (`id`,`name`,`price`,`duration`,`created_at`,`updated_at`) VALUES (3,'Diamond', 89.99, 3, NOW(), NOW());
 
 
 
@@ -27,6 +27,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
+  `age` int NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
@@ -40,7 +41,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 UNLOCK TABLES;
 
-INSERT INTO users (`id`,`name`,`email`,`password`,`isAdmin`,`created_at`,`updated_at`) VALUES (1,'admin', 'admin@system.com', '$2b$10$BD6FRqcGkJgqNc55mTcHbO9JTBddYXFY2cTyiMAcQBs84aT1VOAfO',true, NOW(), NOW());
+INSERT INTO users (`id`,`name`,`email`,`age`,`password`,`isAdmin`,`created_at`,`updated_at`) VALUES (1,'admin', 'admin@system.com',18,'$2b$10$BD6FRqcGkJgqNc55mTcHbO9JTBddYXFY2cTyiMAcQBs84aT1VOAfO',true, NOW(), NOW());
 
 DROP TABLE IF EXISTS `users_plans`;
 CREATE TABLE `users_plans` (

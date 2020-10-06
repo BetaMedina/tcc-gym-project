@@ -14,11 +14,12 @@ describe('User Plans Routes', () => {
     await connection.query('DELETE FROM plans')
     await connection.query('DELETE FROM users')
     await connection.query(`INSERT INTO users (id,name,createdAt,  
+    age,
     updatedAt, 
     email,
     password
-    ) VALUES (1,'users-plans',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'users-plans@test.com','${password}')`)
-    await connection.query('INSERT INTO plans (id,name,price,duration,createdAt,updatedAt) VALUES (1,\'test-plan\',89,\'15 dias\',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
+    ) VALUES (1,'users-plans',CURRENT_TIMESTAMP,18,CURRENT_TIMESTAMP,'users-plans@test.com','${password}')`)
+    await connection.query('INSERT INTO plans (id,name,price,duration,createdAt,updatedAt) VALUES (1,\'test-plan\',89,15,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
   })
   afterAll(async () => {
     await connection.close()
@@ -46,12 +47,12 @@ describe('User Plans Routes', () => {
 
   test('Should update an user plan on success', async () => {
     // const usersRepository = getRepository(model aqui);
-    await connection.query(`INSERT INTO users (id,name,createdAt,  
+    await connection.query(`INSERT INTO users (id,name,age,createdAt,  
       updatedAt, 
       email,
       password
-      ) VALUES (2,'users-plans',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'users-plans2@test.com','hashPassword')`)
-    await connection.query('INSERT INTO plans (id,name,price,duration,createdAt,updatedAt) VALUES (2,\'test-plan2\',89,\'15 dias\',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
+      ) VALUES (2,'users-plans',18,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'users-plans2@test.com','hashPassword')`)
+    await connection.query('INSERT INTO plans (id,name,price,duration,createdAt,updatedAt) VALUES (2,\'test-plan2\',89,15,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
   
     const payload = {
       id: 2,

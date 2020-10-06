@@ -58,7 +58,7 @@ describe('=== ADD USER PLAN ===', () => {
       id: 1,
       name: 'validName',
       price: 10,
-      duration: 'validDuration'
+      duration: 15
     }
   })
   

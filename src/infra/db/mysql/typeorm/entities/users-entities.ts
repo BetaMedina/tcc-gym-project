@@ -15,6 +15,9 @@ class Users extends BaseEntity {
   @Column('varchar')
   name: string;
 
+  @Column('integer')
+  age: number;
+
   @Column('varchar', { unique: true })
   email: string;
   

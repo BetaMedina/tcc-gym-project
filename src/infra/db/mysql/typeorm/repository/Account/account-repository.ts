@@ -5,8 +5,9 @@ import { AddAccountReceived, AddAccount } from '@data/protocols/account/add-acco
 import { UserAccount } from '@domain/models/account/use-account'
 import { LoadAccountByIdRepository } from '@data/protocols/account/load-account-by-id'
 import { IDeleteAccountRepository } from '@data/protocols/account/delete-account'
+import { IListAccountsRepository } from '@data/protocols/account/list-account'
 
-export class Account implements AddAccount, LoadAccountByEmailRepository, LoadAccountByIdRepository, IDeleteAccountRepository {
+export class Account implements AddAccount, LoadAccountByEmailRepository, LoadAccountByIdRepository, IDeleteAccountRepository, IListAccountsRepository {
   async createRow (payload: AddAccountReceived): Promise<UserAccount> {
     return getRepository(Users).create(payload).save()
   }
@@ -21,5 +22,9 @@ export class Account implements AddAccount, LoadAccountByEmailRepository, LoadAc
 
   async deleteRow (id:number):Promise<boolean> {
     return !!getRepository(Users).delete({ id })
+  }
+
+  async listRows (): Promise<UserAccount[]> {
+    return getRepository(Users).find({ select: ['id', 'name', 'email', 'age', 'isAdmin', 'createdAt', 'updatedAt'] })
   }
 }

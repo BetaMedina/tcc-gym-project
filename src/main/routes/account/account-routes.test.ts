@@ -17,14 +17,24 @@ describe('SignUp Routes', () => {
   })
  
   test('Should expected to success response on delete user', async () => {
-    await connection.query(`INSERT INTO users (id,name,createdAt,  
+    await connection.query(`INSERT INTO users (id,name,age,createdAt,  
       updatedAt, 
       email,
       password
-      ) VALUES (4,'users-plans',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'account-test@test.com','hashPassword')`)
+      ) VALUES (4,'users-plans',18,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'account-test@test.com','hashPassword')`)
 
     const response = await request(app).delete(`/api/account/${4}`).send()
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual('Account has been deleted')
+  })
+  test('Should expected to success response on delete user', async () => {
+    await connection.query(`INSERT INTO users (id,name,age,createdAt,  
+      updatedAt, 
+      email,
+      password
+      ) VALUES (5,'users-plans',18,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'account-test@test.com','hashPassword')`)
+
+    const response = await request(app).get('/api/accounts').send()
+    expect(response.statusCode).toBe(200)
   })
 })

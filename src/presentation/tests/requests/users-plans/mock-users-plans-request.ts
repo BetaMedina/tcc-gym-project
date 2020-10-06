@@ -3,7 +3,8 @@ import { HttpRequest } from '@presentation/protocols'
 export const makeUserPlanRequest = ():HttpRequest => ({
   body: {
     userId: 1,
-    planId: 1
+    planId: 1,
+    startDate: new Date()
   }
 })
 

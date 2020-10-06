@@ -50,6 +50,10 @@ CREATE TABLE `users_plans` (
   `plan_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `start_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+
   PRIMARY KEY (`id`),
   KEY `FK_0d68633c9c17c234eb4c09382ad` (`user_id`),
   KEY `FK_56809222b2e55ab4e12c28f9915` (`plan_id`),

@@ -18,6 +18,17 @@ export class usersPlans1600207246046 implements MigrationInterface {
             isNullable: false
           },
           {
+            name: 'is_active',
+            type: 'boolean',
+            isNullable: false,
+            default: true
+          },
+          {
+            name: 'start_date',
+            type: 'timestamp',
+            isNullable: false
+          },
+          {
             name: 'plan_id',
             type: 'integer',
             isNullable: false

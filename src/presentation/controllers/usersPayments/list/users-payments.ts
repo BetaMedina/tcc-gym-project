@@ -10,6 +10,7 @@ export class ListUsersPayments implements ControllerInterface {
       }
       return successResponse(usersPayments)
     } catch (err) {
+      console.log(err.message)
       return serverError(new ServerError(err.msg))
     }
   }

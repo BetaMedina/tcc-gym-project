@@ -6,8 +6,8 @@ import {
   BaseEntity,
   OneToOne,
   JoinColumn,
-  OneToMany,
-  ManyToOne
+  ManyToOne,
+  Column
 } from 'typeorm'
 import { Plans } from './plans-entities'
 import { Users } from './users-entities'
@@ -24,6 +24,12 @@ class UsersPlans extends BaseEntity {
   @ManyToOne(type => Plans, { onDelete: 'CASCADE' })
   @JoinColumn()
   plan: Plans;
+
+  @Column('boolean', { default: true })
+  is_active: boolean;
+
+  @CreateDateColumn() 
+  start_date: Date; 
 
   @CreateDateColumn() 
   createdAt: Date; 

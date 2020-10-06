@@ -8,6 +8,8 @@ export interface IUsersPaymentsModel{
   payment_value:Number,
   payment_type: String,
   payment_date: Date,
+  is_active?: Boolean,
+  start_date?: Date,
   createdAt?:Date,
   updatedAt?:Date,
 }

@@ -1,21 +1,22 @@
 import { DbLoadAccountById } from './load-account-id'
-import { LoadAccountByIdRepository } from '@data/protocols/account/load-account-by-id'
-import { UserAccount } from '@domain/models/account/use-account'
+import { ILoadStudentByIdRepository } from '@data/protocols/students/load-account-by-id'
+import { StudentModel } from '@domain/models/student/student'
 
 type SutTypes = {
   sut: DbLoadAccountById
-  loadAccountByTokenRepositorySpy: LoadAccountByIdRepository
+  loadAccountByTokenRepositorySpy: ILoadStudentByIdRepository
 }
 
 const makeSut = (): SutTypes => {
-  class LoadAccountByIdStub implements LoadAccountByIdRepository {
-    async loadById (id: number):Promise<UserAccount> {
+  class LoadAccountByIdStub implements ILoadStudentByIdRepository {
+    async loadById (id: number):Promise<StudentModel> {
       return {
         id: id,
         name: 'validName',
         email: 'validMail',
-        password: 'validPass',
-        isAdmin: false 
+        age: 22,
+        weigth: 99,
+        height: 99
       }
     }
   }
@@ -38,7 +39,6 @@ describe('DbLoadAccountByToken Usecase', () => {
     const response = await sut.load(1)
     expect(response.id).toBeTruthy()
     expect(response.name).toBeTruthy()
-    expect(response.password).toBeTruthy()
     expect(response.email).toBeTruthy()
   })
 })

@@ -5,10 +5,10 @@ import { Validation } from '@presentation/protocols/validation'
 export const makeUserPaymentsValidation = ():ValidationComposite => {
   const validations:Validation[] = []
 
-  for (const field of ['userId', 'planId', 'paymentType', 'paymentValue', 'paymentDate']) {
+  for (const field of ['studentId', 'planId', 'paymentType', 'paymentValue', 'paymentDate']) {
     validations.push(new RequiredFields(field))
   }
-  validations.push(new RestrictFields(['userId', 'planId', 'paymentType', 'paymentValue', 'paymentDate']))
+  validations.push(new RestrictFields(['studentId', 'planId', 'paymentType', 'paymentValue', 'paymentDate']))
 
   return new ValidationComposite(validations)
 }

@@ -1,8 +1,7 @@
 import { IReadUserPaymentRepository } from '@data/protocols/users-payments/read-user-payment'
-import { ReadUserPlanRepositoryStub } from '@data/tests/mock-users-plan'
 import { Plan } from '@domain/models/plans/plans'
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
-import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 import { ReadUserPayment } from './read-user-payment'
 
 interface ISutTypes {
@@ -14,7 +13,7 @@ export class ReadUserPaymentStub implements IReadUserPaymentRepository {
   async readRow (id:string):Promise<IUsersPaymentsModel> {
     return {
       id: 1,
-      user: {} as Users,
+      student: {} as Students,
       plan: {} as Plan,
       payment_value: 99,
       payment_type: 'boleto',
@@ -52,7 +51,7 @@ describe('=== Read User Payment UseCase===', () => {
     const { sut } = makeSut()
     const response = await sut.find(makeParamsRequest())
 
-    expect(response.user).toBeTruthy()
+    expect(response.student).toBeTruthy()
     expect(response.plan).toBeTruthy()
   })
 })

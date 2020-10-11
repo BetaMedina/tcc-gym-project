@@ -1,6 +1,6 @@
 export * from '@domain/models/plans/plans'
 export * from '@domain/use-cases/plans/find-plan-db'
-export * from '@domain/models/account/use-account'
+export * from '@domain/models/account/user-account'
 export * from '@presentation/helpers/http/http-helper'
 export * from '@presentation/protocols/validation'
 export * from '@domain/use-cases/users-plan/add-user-plan'

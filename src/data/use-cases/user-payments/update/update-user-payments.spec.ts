@@ -4,6 +4,7 @@ import { IUpdateUserPaymentRepository } from '@data/protocols/users-payments/upd
 import { IUpdateUserPaymentReceived } from '@domain/use-cases/users-payments/update-users-payments'
 import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
 import { Plan } from '@domain/models/plans/plans'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 
 interface SutTypes{
   updateUserPlanSut:IUpdateUserPaymentRepository
@@ -29,7 +30,7 @@ const makeSut = ():SutTypes => {
 
 const makeRequest = () => ({
   id: 1,
-  user: {} as Users,
+  student: {} as Students,
   plan: {} as Plan,
   paymentValue: 99,
   paymentType: 'boleto',

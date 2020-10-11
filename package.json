@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test && jest --runInBand --silent --no-cache",
+    "test": "set NODE_ENV=test && jest --runInBand  --no-cache",
     "test:watch": "set NODE_ENV=test && npx jest --passWithNoTests  --noStackTrace --runInBand --no-cache --watch",
     "test:ci": "set NODE_ENV=test && npm run test -- --coverage",
     "dev": "set NODE_ENV=dev && ts-node-dev -r tsconfig-paths/register src/main/server.ts",

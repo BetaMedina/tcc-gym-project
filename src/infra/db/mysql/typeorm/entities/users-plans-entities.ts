@@ -10,16 +10,16 @@ import {
   Column
 } from 'typeorm'
 import { Plans } from './plans-entities'
-import { Users } from './users-entities'
+import { Students } from './students-entities'
 
 @Entity('users_plans')
 class UsersPlans extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: Number;
 
-  @OneToOne(type => Users, { onDelete: 'CASCADE' })
+  @OneToOne(type => Students, { onDelete: 'CASCADE' })
   @JoinColumn()
-  user: Users;
+  student: Students;
   
   @ManyToOne(type => Plans, { onDelete: 'CASCADE' })
   @JoinColumn()

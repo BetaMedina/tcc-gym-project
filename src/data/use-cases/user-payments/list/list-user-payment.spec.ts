@@ -4,6 +4,7 @@ import { IListUserPaymentRepository } from '@data/protocols/users-payments/list-
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
 import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
 import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 
 interface SutTypes { 
   repositorySut:IListUserPlanRepository
@@ -13,7 +14,7 @@ class ListUserPlanRepository implements IListUserPaymentRepository {
   async listRows ():Promise<IUsersPaymentsModel[]> {
     return [{
       id: 1,
-      user: {} as Users,
+      student: {} as Students,
       plan: {} as Plans,
       payment_type: 'boleto',
       payment_date: new Date(),
@@ -38,7 +39,7 @@ describe('=== Users Payments Use Case ===', () => {
 
     const response = await sut.list()
     expect(response[0].id).toBeTruthy()
-    expect(response[0].user).toBeTruthy()
+    expect(response[0].student).toBeTruthy()
     expect(response[0].plan).toBeTruthy()
     expect(response).toBeInstanceOf(Array)
   })

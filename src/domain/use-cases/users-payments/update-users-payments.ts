@@ -1,8 +1,8 @@
-import { UserAccount } from '@domain/models/account/use-account'
 import { Plan } from '@domain/models/plans/plans'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 
 export interface IUpdateUserPaymentReceived{
-  user:UserAccount, 
+  student:Students,
   plan:Plan,
   paymentValue:Number,
   paymentType: String,

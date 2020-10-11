@@ -1,7 +1,7 @@
-import { UserAccount } from '@domain/models/account/use-account'
 import { Plan } from '@domain/models/plans/plans'
-import { LoadAccountById } from '@domain/use-cases/account/load-account-by-id'
+import { StudentModel } from '@domain/models/student/student'
 import { FindPlanCase, findPlanReceived } from '@domain/use-cases/plans/find-plan-db'
+import { ILoadStudentById } from '@domain/use-cases/student/load-account-by-id'
 import { IUpdateUserPayment, IUpdateUserPaymentReceived } from '@domain/use-cases/users-payments/update-users-payments'
 import { InvalidParamError, NotFoundError, ServerError } from '@presentation/errors'
 import { badRequest, serverError, successResponse } from '@presentation/helpers/http/http-helper'
@@ -10,14 +10,15 @@ import { UpdateUsersPayments } from './user-payments'
 
 const date = new Date()
 
-class FindUserStub implements LoadAccountById {
-  async load (id:Number):Promise<UserAccount> {
+class FindUserStub implements ILoadStudentById {
+  async load (id:Number):Promise<StudentModel> {
     return {
       id: 1,
       name: 'validName',
       email: 'validMail@mail.com',
-      password: 'hashPass',
-      isAdmin: false
+      age: 99,
+      height: 99,
+      weigth: 99
     }
   }
 }
@@ -53,7 +54,7 @@ const makeSut = () => {
 const makeUsersPaymentsRequest = () => ({
   params: { id: 1 },
   body: {
-    user_id: 1, 
+    student_id: 1, 
     plan_id: 1, 
     paymentValue: 69, 
     paymentType: 'boleto',
@@ -66,9 +67,9 @@ describe('=== Update user payments ===', () => {
     const { sut, validateSut } = makeSut()
     const payload = makeUsersPaymentsRequest()
 
-    jest.spyOn(validateSut, 'validate').mockReturnValue(new InvalidParamError('userId'))
+    jest.spyOn(validateSut, 'validate').mockReturnValue(new InvalidParamError('studentId'))
     const httpResponse = await sut.handle(payload)
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('userId')))
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('studentId')))
   })
   it('should expect to return error if plan_id not have been pass', async () => {
     const { sut, validateSut } = makeSut()

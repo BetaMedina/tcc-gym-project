@@ -3,6 +3,7 @@ import { IAddUserPaymentRepository } from '@data/protocols/users-payments/add-us
 import { Plan } from '@domain/models/plans/plans'
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
 import { IAddUserPaymentReceived } from '@domain/use-cases/users-payments/add-users-payments'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
 
 import { AddUserPaymentsCase } from './add-user-payments'
@@ -19,7 +20,7 @@ const makeSut = ():SutTypes => {
     async createRow (payload:IAddUserPaymentReceived):Promise<IUsersPaymentsModel> {
       return {
         id: 1,
-        user: {} as Users,
+        student: {} as Students,
         plan: {} as Plan,
         payment_value: 99,
         payment_type: 'boleto',
@@ -37,7 +38,7 @@ const makeSut = ():SutTypes => {
 
 const makeRequest = () => ({
   id: 1,
-  user: {} as Users,
+  student: {} as Students,
   plan: {} as Plan,
   paymentValue: 99,
   paymentType: 'boleto',
@@ -81,7 +82,7 @@ describe('=== ADD USER PLAN ===', () => {
     const response = await sut.create(makeRequest())
     expect(response).toEqual({
       id: 1,
-      user: {} as Users,
+      student: {} as Students,
       plan: {} as Plan,
       payment_value: 99,
       payment_type: 'boleto',

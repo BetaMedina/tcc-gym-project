@@ -2,6 +2,7 @@
 import { Plan } from '@domain/models/plans/plans'
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
 import { IReadUsersPayment } from '@domain/use-cases/users-payments/read-users-payments'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
 import { NotFoundError, ServerError } from '@presentation/errors'
 import { badRequest, serverError } from '@presentation/helpers/http/http-helper'
@@ -20,7 +21,7 @@ export class ReadUserPaymentStub implements IReadUsersPayment {
   async find (id:string):Promise<IUsersPaymentsModel> {
     return {
       id: 1,
-      user: {} as Users,
+      student: {} as Students,
       plan: {} as Plan,
       payment_value: 99,
       payment_type: 'boleto',
@@ -65,7 +66,7 @@ describe('=== READ USER PLAN ===', () => {
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse.statusCode).toBe(200)
-    expect(httpResponse.body.user).toBeTruthy()
+    expect(httpResponse.body.student).toBeTruthy()
     expect(httpResponse.body.plan).toBeTruthy()
   })
 })

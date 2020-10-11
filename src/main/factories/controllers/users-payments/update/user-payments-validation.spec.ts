@@ -9,11 +9,11 @@ describe('LogIn Validation Factory', () => {
   it('Should call ValidationComposite with all correct values', () => {
     makeUserPaymentsValidation()
     const validations:Validation[] = []
-    for (const field of ['userId', 'planId', 'paymentType', 'paymentValue', 'paymentDate']) {
+    for (const field of ['studentId', 'planId', 'paymentType', 'paymentValue', 'paymentDate']) {
       validations.push(new RequiredFields(field))
     }
 
-    validations.push(new RestrictFields(['userId', 'planId', 'paymentType', 'paymentValue', 'paymentDate']))
+    validations.push(new RestrictFields(['studentId', 'planId', 'paymentType', 'paymentValue', 'paymentDate']))
 
     expect(ValidationComposite).toHaveBeenCalledWith(validations) 
   })

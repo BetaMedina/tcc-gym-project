@@ -9,7 +9,7 @@ describe('LogIn Validation Factory', () => {
   it('Should call ValidationComposite with all correct values', () => {
     makeUserPlansValidation()
     const validations:Validation[] = []
-    for (const field of ['userId', 'planId']) {
+    for (const field of ['studentId', 'planId']) {
       validations.push(new RequiredFields(field))
     }
     expect(ValidationComposite).toHaveBeenCalledWith(validations) 

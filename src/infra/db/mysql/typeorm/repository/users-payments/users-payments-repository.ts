@@ -4,16 +4,17 @@ import { IListUserPaymentRepository } from '@data/protocols/users-payments/list-
 import { IReadUserPaymentRepository } from '@data/protocols/users-payments/read-user-payment'
 import { IUpdateUserPaymentRepository } from '@data/protocols/users-payments/update-user-payment'
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
-import { IAddUserPaymentReceived, IUserPayment } from '@domain/use-cases/users-payments/add-users-payments'
+import { IAddUserPaymentReceived } from '@domain/use-cases/users-payments/add-users-payments'
 import { getRepository } from 'typeorm'
 import { Plans } from '../../entities/plans-entities'
+import { Students } from '../../entities/students-entities'
 import { Users } from '../../entities/users-entities'
 import { UsersPayments } from '../../entities/users-payments'
 
 export class UserPaymentRepository implements IAddUserPaymentRepository, IListUserPaymentRepository, IUpdateUserPaymentRepository, IReadUserPaymentRepository {
   async createRow (payload:IAddUserPaymentReceived):Promise<IUsersPaymentsModel> {
     const userPayment = new UsersPayments()
-    userPayment.user = payload.user as Users
+    userPayment.student = payload.student as Students
     userPayment.plan = payload.plan as Plans 
     userPayment.payment_type = payload.paymentType
     userPayment.payment_value = payload.paymentValue
@@ -22,13 +23,13 @@ export class UserPaymentRepository implements IAddUserPaymentRepository, IListUs
   }
 
   async listRows ():Promise<IUsersPaymentsModel[]> {
-    return getRepository(UsersPayments).find({ relations: ['user', 'plan'] })
+    return getRepository(UsersPayments).find({ relations: ['student', 'plan'] })
   }
 
   async updateRow (payload:IAddUserPaymentReceived):Promise<boolean> {
     const userPayment = new UsersPayments()
     userPayment.id = payload.id
-    userPayment.user = payload.user as Users
+    userPayment.student = payload.student as Students
     userPayment.plan = payload.plan as Plans 
     userPayment.payment_type = payload.paymentType
     userPayment.payment_value = payload.paymentValue
@@ -37,7 +38,7 @@ export class UserPaymentRepository implements IAddUserPaymentRepository, IListUs
   }
 
   async readRow (id:string):Promise<IUsersPaymentsModel> {
-    const response = await getRepository(UsersPayments).findOne({ relations: ['user', 'plan'], where: { id } })
+    const response = await getRepository(UsersPayments).findOne({ relations: ['student', 'plan'], where: { id } })
     console.log(response)
     return response
   }

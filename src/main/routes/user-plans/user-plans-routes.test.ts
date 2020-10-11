@@ -1,25 +1,32 @@
 import createConnection from '@infra/db/mysql/typeorm/conn/typeorm-conn'
-import bcrypt from 'bcrypt'
 import app from '@main/config/app'
 import request from 'supertest'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
+import { getRepository } from 'typeorm'
+import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
+import { UsersPlans } from '@infra/db/mysql/typeorm/entities/users-plans-entities'
 
-let connection 
+let connection, student, plan
 
 describe('User Plans Routes', () => {
   beforeAll(async () => {
     connection = await createConnection('medina_test')
   })
   beforeEach(async () => {
-    const password = await bcrypt.hash('any_password', 10)
-    await connection.query('DELETE FROM plans')
-    await connection.query('DELETE FROM users')
-    await connection.query(`INSERT INTO users (id,name,createdAt,  
-    age,
-    updatedAt, 
-    email,
-    password
-    ) VALUES (1,'users-plans',CURRENT_TIMESTAMP,18,CURRENT_TIMESTAMP,'users-plans@test.com','${password}')`)
-    await connection.query('INSERT INTO plans (id,name,price,duration,createdAt,updatedAt) VALUES (1,\'test-plan\',89,15,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
+    await connection.query('DELETE FROM users_plans')
+    await connection.query('DELETE FROM students')
+    student = await getRepository(Students).create({
+      name: 'new-account',
+      email: 'userPayments@gmail.com',
+      weigth: 99,
+      age: 18,
+      height: 188
+    }).save()
+    plan = await getRepository(Plans).create({
+      name: 'new-account',
+      duration: 3,
+      price: 99
+    }).save()
   })
   afterAll(async () => {
     await connection.close()
@@ -28,59 +35,95 @@ describe('User Plans Routes', () => {
   test('Should return an account on success', async () => {
     // const usersRepository = getRepository(model aqui);
     const payload = {
-      userId: 1,
-      planId: 1
+      studentId: student.id,
+      planId: plan.id
     }
     const response = await request(app).post('/api/user-plans').send(payload)
-
     expect(response.statusCode).toBe(200)
   })
   test('Should return an list on success', async () => {
     // const usersRepository = getRepository(model aqui);
-    await connection.query('INSERT INTO users_plans (id,createdAt,updatedAt,userId,planId) VALUES (2,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1,1)')
+    const student = await getRepository(Students).create({
+      name: 'new-account',
+      email: 'user-new-test-2@gmail.com',
+      weigth: 99,
+      age: 18,
+      height: 188
+    }).save()
+    const plan = await getRepository(Plans).create({
+      name: 'new-account',
+      duration: 3,
+      price: 99
+    }).save()
 
+    await getRepository(UsersPlans).create({
+      plan: plan,
+      student: student
+    }).save()
     const response = await request(app).get('/api/user-plans').send()
     expect(response.statusCode).toBe(200)
-    expect(response.body[0].user).toBeInstanceOf(Object)
+    expect(response.body[0].student).toBeInstanceOf(Object)
     expect(response.body[0].plan).toBeInstanceOf(Object)
   })
 
   test('Should update an user plan on success', async () => {
-    // const usersRepository = getRepository(model aqui);
-    await connection.query(`INSERT INTO users (id,name,age,createdAt,  
-      updatedAt, 
-      email,
-      password
-      ) VALUES (2,'users-plans',18,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'users-plans2@test.com','hashPassword')`)
-    await connection.query('INSERT INTO plans (id,name,price,duration,createdAt,updatedAt) VALUES (2,\'test-plan2\',89,15,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
-  
     const payload = {
       id: 2,
-      userId: 1,
-      planId: 1
+      studentId: student.id,
+      planId: plan.id
     }
-
-    await connection.query('INSERT INTO users_plans (id,createdAt,updatedAt,userId,planId) VALUES (2,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1,1)')
 
     const response = await request(app).put('/api/user-plans').send(payload)
     expect(response.statusCode).toBe(200)
-    expect(response.body.user).toBeInstanceOf(Object)
+    expect(response.body.student).toBeInstanceOf(Object)
     expect(response.body.plan).toBeInstanceOf(Object)
   })
   test('Should read an user plan on success', async () => {
-    await connection.query('INSERT INTO users_plans (id,createdAt,updatedAt,userId,planId) VALUES (2,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1,1)')
+    const student = await getRepository(Students).create({
+      name: 'new-account',
+      email: 'user-new-test-6@gmail.com',
+      weigth: 99,
+      age: 18,
+      height: 188
+    }).save()
+    const plan = await getRepository(Plans).create({
+      name: 'test-plan',
+      duration: 3,
+      price: 99
+    }).save()
 
-    const response = await request(app).get('/api/user-plans/2').send()
+    const userPlan = await getRepository(UsersPlans).create({
+      plan: plan,
+      student: student
+    }).save()
+
+    const response = await request(app).get(`/api/user-plans/${userPlan.id}`).send()
 
     expect(response.statusCode).toBe(200)
-    expect(response.body.user).toBeInstanceOf(Object)
+    expect(response.body.student).toBeInstanceOf(Object)
     expect(response.body.plan.name).toEqual('test-plan')
-    expect(response.body.user.name).toEqual('users-plans')
+    expect(response.body.student.name).toEqual('new-account')
   })
   test('Should delete an user plan on success', async () => {
-    await connection.query('INSERT INTO users_plans (id,createdAt,updatedAt,userId,planId) VALUES (2,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1,1)')
+    const student = await getRepository(Students).create({
+      name: 'new-account',
+      email: 'user-new-test-6@gmail.com',
+      weigth: 99,
+      age: 18,
+      height: 188
+    }).save()
+    const plan = await getRepository(Plans).create({
+      name: 'new-account',
+      duration: 3,
+      price: 99
+    }).save()
 
-    const response = await request(app).delete('/api/user-plans/2').send()
+    const userPlan = await getRepository(UsersPlans).create({
+      plan: plan,
+      student: student
+    }).save()
+
+    const response = await request(app).delete(`/api/user-plans/${userPlan.id}`).send()
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual('User plan has been deleted')

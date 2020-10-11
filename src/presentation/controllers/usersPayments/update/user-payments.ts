@@ -2,11 +2,12 @@ import { LoadAccountById, FindPlanCase, badRequest, Validation, IUpdateUserPayme
 import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
 import { NotFoundError, ServerError } from '@presentation/errors'
 import { serverError, successResponse } from '@presentation/helpers/http/http-helper'
+import { ILoadStudentById } from '@domain/use-cases/student/load-account-by-id'
 
 export class UpdateUsersPayments implements ControllerInterface {
   constructor (
     private readonly payloadValidation:Validation,
-    private readonly findUserId:LoadAccountById,
+    private readonly findstudentId:ILoadStudentById,
     private readonly findPlan:FindPlanCase,
     private readonly updateUserPayment:IUpdateUserPayment
   ) {}
@@ -17,7 +18,7 @@ export class UpdateUsersPayments implements ControllerInterface {
       if (error) {
         return badRequest(error)
       }
-      const user = await this.findUserId.load(httpRequest.body.userId)
+      const user = await this.findstudentId.load(httpRequest.body.studentId)
       if (!user) {
         return badRequest(new NotFoundError('Id user'))
       }
@@ -26,7 +27,7 @@ export class UpdateUsersPayments implements ControllerInterface {
       if (!plan) {
         return badRequest(new NotFoundError('Id plan'))
       }
-      const { userId, planId, ...request } = httpRequest.body
+      const { studentId, planId, ...request } = httpRequest.body
       const { id } = httpRequest.params
       await this.updateUserPayment.update({ ...request, user, plan, id })
       return successResponse('User Payment updated success')

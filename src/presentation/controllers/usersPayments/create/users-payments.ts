@@ -1,9 +1,10 @@
 import { LoadAccountById, FindPlanCase, IUserPayment, NotFoundError, ServerError, badRequest, serverError, successResponse, Validation } from '../users-plans.protocols'
 import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
+import { ILoadStudentById } from '@domain/use-cases/student/load-account-by-id'
 export class UsersPayments implements ControllerInterface {
   constructor (
     private readonly payloadValidation:Validation,
-    private readonly findUserId:LoadAccountById,
+    private readonly findstudentId:ILoadStudentById,
     private readonly findPlan:FindPlanCase,
     private readonly createUserPayment:IUserPayment
   ) {}
@@ -15,7 +16,7 @@ export class UsersPayments implements ControllerInterface {
         return badRequest(error)
       }
     
-      const user = await this.findUserId.load(httpRequest.body.userId)
+      const user = await this.findstudentId.load(httpRequest.body.studentId)
       if (!user) {
         return badRequest(new NotFoundError('Id user'))
       }
@@ -24,7 +25,7 @@ export class UsersPayments implements ControllerInterface {
       if (!plan) {
         return badRequest(new NotFoundError('Id plan'))
       }
-      const { userId, planId, ...data } = httpRequest.body
+      const { studentId, planId, ...data } = httpRequest.body
       const userPaymentResponse = await this.createUserPayment.create({ user, plan, ...data })
       return successResponse(userPaymentResponse)
     } catch (err) {

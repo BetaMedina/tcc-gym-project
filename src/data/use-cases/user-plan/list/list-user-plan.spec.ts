@@ -10,12 +10,13 @@ class ListUserPlanRepository implements IListUserPlanRepository {
   async listRows ():Promise<IListUserPlanModel[]> {
     return [{
       id: 1,
-      user: {
+      student: {
         id: 1,
         name: 'validName',
         email: 'validMail@mail.com',
-        password: 'hasPass',
-        isAdmin: false
+        age: 22,
+        weigth: 99,
+        height: 20
       },
       plan: {
         id: 1,
@@ -43,7 +44,7 @@ describe('=== List Plans Use Case ===', () => {
 
     const response = await sut.list()
     expect(response[0].id).toBeTruthy()
-    expect(response[0].user).toBeTruthy()
+    expect(response[0].student).toBeTruthy()
     expect(response[0].plan).toBeTruthy()
     expect(response).toBeInstanceOf(Array)
   })

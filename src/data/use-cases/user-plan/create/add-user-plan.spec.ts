@@ -1,10 +1,9 @@
 
 import { IAddUserPlanRepository } from '@data/protocols/user-plan/add-user-plan'
-import { UserAccount } from '@domain/models/account/use-account'
 import { Plan } from '@domain/models/plans/plans'
+import { StudentModel } from '@domain/models/student/student'
 import { UserPlanModel } from '@domain/models/user-plans/users-plans'
-import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
-import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 import { AddUserPlanCase } from './add-user-plan'
 
 interface SutTypes{
@@ -16,10 +15,10 @@ let PlanRequest
 
 const makeSut = ():SutTypes => {
   class AddUserPlanRepositoryStub implements IAddUserPlanRepository {
-    async createRow (user:Users, plan:Plans):Promise<UserPlanModel> {
+    async createRow (student:StudentModel, plan:Plan):Promise<UserPlanModel> {
       return {
         id: 1,
-        user: {} as UserAccount,
+        student: {} as Students,
         plan: {} as Plan
       }
     }
@@ -54,7 +53,7 @@ describe('=== ADD USER PLAN ===', () => {
     const { addUserPlanSut, sut } = makeSut()
     const spyPlan = jest.spyOn(addUserPlanSut, 'createRow')
     const payload = {
-      userId: 1,
+      studentId: 1,
       planId: 1
     }
 
@@ -65,7 +64,7 @@ describe('=== ADD USER PLAN ===', () => {
     const { addUserPlanSut, sut } = makeSut()
     jest.spyOn(addUserPlanSut, 'createRow').mockImplementation(() => { throw new Error() })
     const payload = {
-      userId: 1,
+      studentId: 1,
       planId: 1
     }
     expect(sut.create(UserRequest, PlanRequest)).rejects.toThrow()
@@ -77,7 +76,7 @@ describe('=== ADD USER PLAN ===', () => {
     expect(response).toEqual({
       id: 1,
       plan: {},
-      user: {}
+      student: {}
     })
   })
 })

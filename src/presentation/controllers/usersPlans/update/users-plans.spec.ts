@@ -12,12 +12,13 @@ import { IUpdateUserPlan } from '@domain/use-cases/users-plan/update-user-plan'
 import { successResponse } from '@presentation/helpers/http/http-helper'
 import { FindPlanCaseStub, FindUserStub, ValidatorStub, UpdateUserPlanStub } from '@presentation/tests'
 import { makeUserPlanUpdateRequest } from '@presentation/tests/requests'
+import { ILoadStudentById } from '@domain/use-cases/student/load-account-by-id'
 
 interface SutTypes{
   sut:UsersPlans,
   validationSut:Validation,
   plansCaseSut:FindPlanCase,
-  usersCaseSut:LoadAccountById,
+  usersCaseSut:ILoadStudentById,
   updateUserPlanSut:IUpdateUserPlan
 }
 
@@ -31,14 +32,14 @@ const makeSut = ():SutTypes => {
 }
 
 describe('=== USERS PLANS UPDATE ===', () => {
-  it('Should expected to return error userId not pass', async () => {
+  it('Should expected to return error studentId not pass', async () => {
     const { sut, validationSut } = makeSut()
-    jest.spyOn(validationSut, 'validate').mockReturnValue(new InvalidParamError('userId'))
+    jest.spyOn(validationSut, 'validate').mockReturnValue(new InvalidParamError('studentId'))
 
     const payload = makeUserPlanUpdateRequest()
 
     const httpResponse = await sut.handle(payload)
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('userId')))
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('studentId')))
   })
   it('Should expected to return error planId not pass', async () => {
     const { sut, validationSut } = makeSut()
@@ -95,6 +96,6 @@ describe('=== USERS PLANS UPDATE ===', () => {
     const payload = makeUserPlanUpdateRequest()
 
     const httpResponse = await sut.handle(payload)
-    expect(httpResponse).toEqual(successResponse({ id: 1, user: {}, plan: {} }))
+    expect(httpResponse).toEqual(successResponse({ id: 1, student: {}, plan: {} }))
   })
 })

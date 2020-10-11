@@ -1,7 +1,7 @@
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
 import { IListUsersPayments } from '@domain/use-cases/users-payments/list-users-payments'
 import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
-import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 import { ServerError } from '@presentation/errors'
 import { serverError } from '@presentation/helpers/http/http-helper'
 import { ListUsersPayments } from './users-payments'
@@ -16,7 +16,7 @@ class ListUsersPaymentsStub implements IListUsersPayments {
   async list ():Promise<IUsersPaymentsModel[]> {
     return [{
       id: 1,
-      user: {} as Users,
+      student: {} as Students,
       plan: {} as Plans,
       payment_value: 99,
       payment_type: 'boleto',

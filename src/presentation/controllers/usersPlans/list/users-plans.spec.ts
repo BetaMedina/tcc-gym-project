@@ -11,12 +11,13 @@ class ListUsersPlans implements IListUsersPlans {
   async list ():Promise<IListUserPlanModel[]> {
     return [{
       id: 1,
-      user: {
+      student: {
         id: 1,
         name: 'validName',
         email: 'validMail@mail.com',
-        password: 'hasPass',
-        isAdmin: false
+        age: 22,
+        height: 99,
+        weigth: 99
       },
       plan: {
         id: 1,

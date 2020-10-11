@@ -1,7 +1,7 @@
-import { UserAccount } from '@domain/models/account/use-account'
 import { UserPlanModel } from '@domain/models/user-plans/users-plans'
 import { Plan } from '@domain/models/plans/plans'
+import { StudentModel } from '@domain/models/student/student'
 
 export interface AddUserPlan{
-  create (user:UserAccount, plan:Plan):Promise<UserPlanModel> 
+  create (student:StudentModel, plan:Plan):Promise<UserPlanModel> 
 }

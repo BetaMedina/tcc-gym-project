@@ -1,3 +1,4 @@
+import { ILoadStudentById } from '@domain/use-cases/student/load-account-by-id'
 import { successResponse } from '@presentation/helpers/http/http-helper'
 import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
 import {
@@ -9,7 +10,7 @@ export class UsersPlans implements ControllerInterface {
   constructor (
     private readonly payloadValidation:Validation, 
     private readonly findPlan:FindPlanCase, 
-    private readonly userAccount:LoadAccountById,
+    private readonly userAccount:ILoadStudentById,
     private readonly updateUserPlan:IUpdateUserPlan
   ) {}
 
@@ -23,7 +24,7 @@ export class UsersPlans implements ControllerInterface {
       if (!plan) { 
         return badRequest(new NotFoundError('Id plan'))
       }
-      const user = await this.userAccount.load(httpRequest.body.userId)
+      const user = await this.userAccount.load(httpRequest.body.studentId)
       if (!user) { 
         return badRequest(new NotFoundError('Id user'))
       }

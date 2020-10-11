@@ -1,26 +1,28 @@
 import createConnection from '@infra/db/mysql/typeorm/conn/typeorm-conn'
 import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
-import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
 import { UsersPayments } from '@infra/db/mysql/typeorm/entities/users-payments'
 import { Connection, getRepository } from 'typeorm'
 import app from '@main/config/app'
 import request from 'supertest'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 
 let connection: Connection
-let user, plan, Payment
+let student, plan, Payment
 
 describe('User Payments Routes', () => {
   beforeEach(async () => {
     connection = await createConnection('medina_test')
-    await connection.query('delete from users')
+    await connection.query('delete from students')
     await connection.query('delete from plans')
     await connection.query('delete from users_payments')
-    user = await getRepository(Users).create({
+    student = await getRepository(Students).create({
       name: 'new-account',
       email: 'userPayments@gmail.com',
-      password: 'validPass',
-      age: 18
+      weigth: 88,
+      age: 18,
+      height: 188
     }).save()
+
     plan = await getRepository(Plans).create({
       name: 'validPlan',
       price: 99,
@@ -33,7 +35,7 @@ describe('User Payments Routes', () => {
   
   test('Should return an User Payment on success', async () => {
     const payload = {
-      userId: user.id,
+      studentId: student.id,
       planId: plan.id,
       paymentType: 'boleto',
       paymentValue: 69.99,
@@ -61,7 +63,7 @@ describe('User Payments Update routes', () => {
   beforeEach(async () => {
     connection = await createConnection('medina_test')
     const userPayment = new UsersPayments()
-    userPayment.user = user
+    userPayment.student = student
     userPayment.plan = plan 
     userPayment.payment_type = 'boleto'
     userPayment.payment_value = 99.99
@@ -74,7 +76,7 @@ describe('User Payments Update routes', () => {
   })
   test('Should return an User Payment on success', async () => {
     const payload = {
-      userId: user.id,
+      studentId: student.id,
       planId: plan.id,
       paymentType: 'cartão',
       paymentValue: 89.99,

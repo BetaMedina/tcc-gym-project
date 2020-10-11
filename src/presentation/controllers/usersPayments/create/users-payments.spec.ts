@@ -1,10 +1,13 @@
-import { UserAccount } from '@domain/models/account/use-account'
+import { UserAccount } from '@domain/models/account/user-account'
 import { Plan } from '@domain/models/plans/plans'
+import { StudentModel } from '@domain/models/student/student'
 import { IUsersPaymentsModel } from '@domain/models/users-payments/users-payments'
 import { FindUserCase, findUserReceived } from '@domain/use-cases/account/find-account-db'
 import { LoadAccountById } from '@domain/use-cases/account/load-account-by-id'
 import { FindPlanCase, findPlanReceived } from '@domain/use-cases/plans/find-plan-db'
+import { ILoadStudentById } from '@domain/use-cases/student/load-account-by-id'
 import { IAddUserPaymentReceived, IUserPayment } from '@domain/use-cases/users-payments/add-users-payments'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
 import { InvalidParamError, NotFoundError, ServerError } from '@presentation/errors'
 import { badRequest, serverError, successResponse } from '@presentation/helpers/http/http-helper'
@@ -15,18 +18,19 @@ const date = new Date()
 interface ISutTypes{
   sut:UsersPayments,
   validateSut:ValidatorStub,
-  findUserSut:LoadAccountById,
+  findUserSut:ILoadStudentById,
   findPlanSut:FindPlanCase
 }
 
-class FindUserStub implements LoadAccountById {
-  async load (id:Number):Promise<UserAccount> {
+class FindUserStub implements ILoadStudentById {
+  async load (id:Number):Promise<StudentModel> {
     return {
       id: 1,
       name: 'validName',
       email: 'validMail@mail.com',
-      password: 'hashPass',
-      isAdmin: false
+      age: 99,
+      height: 99,
+      weigth: 99
     }
   }
 }
@@ -45,7 +49,7 @@ class CreateUserPaymentStub implements IUserPayment {
   async create (payload:IAddUserPaymentReceived): Promise<IUsersPaymentsModel> {
     return {
       id: 1,
-      user: {} as Users,
+      student: {} as StudentModel,
       plan: {} as Plan,
       payment_value: 99,
       payment_type: 'boleto',
@@ -80,9 +84,9 @@ describe('=== Users Payments ===', () => {
     const { sut, validateSut } = makeSut()
     const payload = makeUsersPaymentsRequest()
 
-    jest.spyOn(validateSut, 'validate').mockReturnValue(new InvalidParamError('userId'))
+    jest.spyOn(validateSut, 'validate').mockReturnValue(new InvalidParamError('studentId'))
     const httpResponse = await sut.handle(payload)
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('userId')))
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('studentId')))
   })
   it('should expect to return error if plan_id not have been pass', async () => {
     const { sut, validateSut } = makeSut()
@@ -139,7 +143,7 @@ describe('=== Users Payments ===', () => {
     const httpResponse = await sut.handle(payload)
     expect(httpResponse).toEqual(successResponse({
       id: 1,
-      user: {},
+      student: {},
       plan: {},
       payment_value: 99,
       payment_type: 'boleto',

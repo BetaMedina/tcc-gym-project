@@ -1,4 +1,4 @@
-import { UserAccount } from '@domain/models/account/use-account'
+import { UserAccount } from '@domain/models/account/user-account'
 import { IListUser } from '@domain/use-cases/account/list-account'
 import { emptyResponse, serverError } from '@presentation/helpers/http/http-helper'
 import { ListAccountController } from './account-controller'

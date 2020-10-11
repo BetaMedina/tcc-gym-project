@@ -49,7 +49,7 @@ describe('=== READ USER PLAN ===', () => {
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse.statusCode).toBe(200)
-    expect(httpResponse.body.user).toBeTruthy()
+    expect(httpResponse.body.student).toBeTruthy()
     expect(httpResponse.body.plan).toBeTruthy()
   })
 })

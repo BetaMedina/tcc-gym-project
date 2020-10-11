@@ -1,9 +1,10 @@
-import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
+import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 import { Plan } from '../plans/plans'
+import { StudentModel } from '../student/student'
 
 export interface IUsersPaymentsModel{
   id:Number,
-  user:Users,
+  student:StudentModel,
   plan:Plan,
   payment_value:Number,
   payment_type: String,

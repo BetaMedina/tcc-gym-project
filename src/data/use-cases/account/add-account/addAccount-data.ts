@@ -1,5 +1,5 @@
 import { Encrypter } from '@data/protocols/encrypter/encrypt'
-import { UserAccount } from '@domain/models/account/use-account'
+import { UserAccount } from '@domain/models/account/user-account'
 import { AddAccountRepository, AddAccountParams } from '@domain/use-cases/account/add-account-db'
 import { AddAccount } from '@data/protocols/account/add-account'
 

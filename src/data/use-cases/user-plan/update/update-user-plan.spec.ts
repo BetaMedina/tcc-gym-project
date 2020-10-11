@@ -4,8 +4,9 @@ import { IUpdateUserPlanRepository } from '@data/protocols/user-plan/update-user
 import { UserPlanModel } from '@domain/models/user-plans/users-plans'
 import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
 import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
-import { UserAccount } from '@domain/models/account/use-account'
+import { UserAccount } from '@domain/models/account/user-account'
 import { Plan } from '@domain/models/plans/plans'
+import { StudentModel } from '@domain/models/student/student'
 
 interface SutTypes{
   updateUserPlanSut:IUpdateUserPlanRepository
@@ -16,10 +17,10 @@ let PlanRequest
 
 const makeSut = ():SutTypes => {
   class UpdateUserPlanRepositoryStub implements IUpdateUserPlanRepository {
-    async updateRow (id:number, user:Users, plan:Plans):Promise<UserPlanModel> {
+    async updateRow (id:number, student:StudentModel, plan:Plan):Promise<UserPlanModel> {
       return {
         id: 1,
-        user: {} as UserAccount,
+        student: {} as StudentModel,
         plan: {} as Plan
       }
     }
@@ -69,7 +70,7 @@ describe('=== UPDATE USER PLAN ===', () => {
     const response = await sut.update(1, UserRequest, PlanRequest)
     expect(response).toEqual({
       id: 1,
-      user: {},
+      student: {},
       plan: {}
     })
   })

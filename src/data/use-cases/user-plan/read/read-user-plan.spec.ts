@@ -35,7 +35,7 @@ describe('=== Read User Plan UseCase===', () => {
     const { sut } = makeSut()
     const response = await sut.find(makeParamsRequest())
 
-    expect(response.user).toBeTruthy()
+    expect(response.student).toBeTruthy()
     expect(response.plan).toBeTruthy()
   })
 })

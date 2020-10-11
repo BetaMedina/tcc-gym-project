@@ -1,8 +1,8 @@
-import { UserAccount } from '@domain/models/account/use-account'
 import { Plan } from '@domain/models/plans/plans'
+import { StudentModel } from '../student/student'
 
 export interface IListUserPlanModel{
   id:Number,
-  user:UserAccount,
+  student:StudentModel,
   plan:Plan
 }

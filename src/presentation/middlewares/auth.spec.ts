@@ -1,4 +1,4 @@
-import { UserAccount } from '@domain/models/account/use-account'
+import { UserAccount } from '@domain/models/account/user-account'
 import { LoadAccountByToken } from '@domain/use-cases/account/load-account-token'
 import { AccessDeniedError } from '@presentation/errors'
 import { forbidden, serverError, successResponse } from '@presentation/helpers/http/http-helper'

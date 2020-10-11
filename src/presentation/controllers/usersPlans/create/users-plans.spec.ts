@@ -4,17 +4,17 @@ import {
   FindPlanCase,
   badRequest,
   Validation,
-  AddUserPlan,
-  LoadAccountById
+  AddUserPlan
 } from '../users-plans.protocols'
 import { AddUserPlanStub, FindPlanCaseStub, FindUserStub, ValidatorStub } from '@presentation/tests'
 import { makeUserPlanRequest } from '@presentation/tests/requests'
 import { InvalidParamError, NotFoundError, ServerError } from '@presentation/errors'
+import { ILoadStudentById } from '@domain/use-cases/student/load-account-by-id'
 interface SutTypes{
   sut:UsersPlans,
   validationSut:Validation,
   plansCaseSut:FindPlanCase,
-  usersCaseSut:LoadAccountById,
+  usersCaseSut:ILoadStudentById,
   addUserPlanSut:AddUserPlan
 }
 
@@ -28,14 +28,14 @@ const makeSut = ():SutTypes => {
 }
 
 describe('=== USERS PLANS ===', () => {
-  it('Should expected to return error userId not pass', async () => {
+  it('Should expected to return error studentId not pass', async () => {
     const { sut, validationSut } = makeSut()
-    jest.spyOn(validationSut, 'validate').mockReturnValue(new InvalidParamError('userId'))
+    jest.spyOn(validationSut, 'validate').mockReturnValue(new InvalidParamError('studentId'))
 
     const payload = makeUserPlanRequest()
 
     const httpResponse = await sut.handle(payload)
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('userId')))
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('studentId')))
   })
   it('Should expected to return error planId not pass', async () => {
     const { sut, validationSut } = makeSut()
@@ -106,7 +106,7 @@ describe('=== USERS PLANS ===', () => {
 
     const httpResponse = await sut.handle(payload)
     expect(httpResponse.statusCode).toEqual(200)
-    expect(httpResponse.body.user).toBeInstanceOf(Object)
+    expect(httpResponse.body.student).toBeInstanceOf(Object)
     expect(httpResponse.body.plan).toBeInstanceOf(Object)
   })
 })

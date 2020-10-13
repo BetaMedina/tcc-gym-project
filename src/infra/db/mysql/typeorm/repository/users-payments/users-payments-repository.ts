@@ -39,7 +39,6 @@ export class UserPaymentRepository implements IAddUserPaymentRepository, IListUs
 
   async readRow (id:string):Promise<IUsersPaymentsModel> {
     const response = await getRepository(UsersPayments).findOne({ relations: ['student', 'plan'], where: { id } })
-    console.log(response)
     return response
   }
 }

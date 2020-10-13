@@ -67,8 +67,13 @@ describe('User Plans Routes', () => {
   })
 
   test('Should update an user plan on success', async () => {
+    const userPlan = await getRepository(UsersPlans).create({
+      plan: plan,
+      student: student
+    }).save()
+
     const payload = {
-      id: 2,
+      id: userPlan.id,
       studentId: student.id,
       planId: plan.id
     }

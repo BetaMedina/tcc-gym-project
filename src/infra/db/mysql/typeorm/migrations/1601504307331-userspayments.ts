@@ -51,20 +51,20 @@ export class userspayments1601504307331 implements MigrationInterface {
           }
         ]
       }))
-    await queryRunner.createForeignKey('users_plans', new TableForeignKey({
+    await queryRunner.createForeignKey('users_payments', new TableForeignKey({
       columnNames: ['student_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'students',
-      onDelete: 'CASCADE',
-      name: 'userpayment_user'
+      name: 'student-usersPayments-fk',
+      onDelete: 'CASCADE'
 
     }))
-    await queryRunner.createForeignKey('users_plans', new TableForeignKey({
+    await queryRunner.createForeignKey('users_payments', new TableForeignKey({
       columnNames: ['plan_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'plans',
-      onDelete: 'CASCADE',
-      name: 'userpayment_plan'
+      name: 'payments-usersPayments-fk',
+      onDelete: 'CASCADE'
     }))
   }
 

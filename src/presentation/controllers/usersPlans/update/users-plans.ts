@@ -2,7 +2,7 @@ import { ILoadStudentById } from '@domain/use-cases/student/load-account-by-id'
 import { successResponse } from '@presentation/helpers/http/http-helper'
 import { ControllerInterface, HttpRequest, HttpResponse } from '@presentation/protocols'
 import {
-  FindPlanCase, LoadAccountById, Validation, badRequest, 
+  FindPlanCase, Validation, badRequest, 
   NotFoundError, IUpdateUserPlan, ServerError, serverError 
 } from '../users-plans.protocols'
 
@@ -20,6 +20,7 @@ export class UsersPlans implements ControllerInterface {
       if (error) {
         return badRequest(error)
       }
+      
       const plan = await this.findPlan.find(httpRequest.body.planId)
       if (!plan) { 
         return badRequest(new NotFoundError('Id plan'))
@@ -31,6 +32,7 @@ export class UsersPlans implements ControllerInterface {
       const updateResponse = await this.updateUserPlan.update(httpRequest.body.id, user, plan) 
       return successResponse(updateResponse)
     } catch (err) {
+      console.log(err)
       return serverError(new ServerError(err.message))
     }
   }

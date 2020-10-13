@@ -1,5 +1,3 @@
-// 
-
 import { IListAccountsRepository } from '@data/protocols/account/list-account'
 import { IListUser } from '@domain/use-cases/account/list-account'
 import { UserAccount } from '../load-account-token/load-account-token-protocols'

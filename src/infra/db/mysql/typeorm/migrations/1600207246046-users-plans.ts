@@ -51,13 +51,16 @@ export class usersPlans1600207246046 implements MigrationInterface {
       columnNames: ['student_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'students',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      name: 'students-userPlans-fk'
     }))
     await queryRunner.createForeignKey('users_plans', new TableForeignKey({
       columnNames: ['plan_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'plans',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      name: 'plans-userPlans-fk'
+
     }))
   }
 

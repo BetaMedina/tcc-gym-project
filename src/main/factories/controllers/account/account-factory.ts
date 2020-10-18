@@ -1,12 +1,8 @@
 import { AccountController } from '@presentation/controllers/account/delete/account-controller'
-
-import { LogMongoRepository } from '@infra/db/mongo/repository/log.repository'
-import { LogErrorDecorator } from '@main/decorators/log.decorator'
 import { makeDeleteAccountFactory } from '@main/factories/use-cases/account/delete-account-factory'
+import { makeLogErrorDecorator } from '@main/factories/main/decorators/LogErrorDecorator'
 
 export const makeDeleteAccountController = () => {
-  const logRepository = new LogMongoRepository() 
   const loginController = new AccountController(makeDeleteAccountFactory())
-
-  return new LogErrorDecorator(loginController, logRepository)
+  return makeLogErrorDecorator(loginController)
 }

@@ -4,11 +4,11 @@ import { emptyResponse, serverError, successResponse } from '@presentation/helpe
 import { IReadStudents } from '@domain/use-cases/student/read-student'
 
 export class StudentController implements ControllerInterface {
-  constructor (private readonly listPlans:IReadStudents) {}
+  constructor (private readonly listStudent:IReadStudents) {}
 
   async handle (httpRequest:HttpRequest):Promise<HttpResponse> {
     try {
-      const response = await this.listPlans.read(httpRequest.params.id)
+      const response = await this.listStudent.read(httpRequest.params.id)
       if (!response) {
         return emptyResponse()
       }

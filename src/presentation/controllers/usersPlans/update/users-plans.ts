@@ -29,10 +29,9 @@ export class UsersPlans implements ControllerInterface {
       if (!user) { 
         return badRequest(new NotFoundError('Id user'))
       }
-      const updateResponse = await this.updateUserPlan.update(httpRequest.body.id, user, plan) 
+      const updateResponse = await this.updateUserPlan.update(httpRequest.body.id, user, plan, httpRequest.body.startDate) 
       return successResponse(updateResponse)
     } catch (err) {
-      console.log(err)
       return serverError(new ServerError(err.message))
     }
   }

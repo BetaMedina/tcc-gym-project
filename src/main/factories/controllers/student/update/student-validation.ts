@@ -3,14 +3,24 @@ import { EmailValidator, RequiredFields, RestrictFields } from '@presentation/he
 import { ValidationComposite } from '@presentation/helpers/validators/validation-composite'
 import { Validation } from '@presentation/protocols/validation'
 
-export const makeUserPlansValidation = ():ValidationComposite => {
+export const makeStudentValidation = ():ValidationComposite => {
   const validations:Validation[] = []
+  const emailValidator = new EmailValidatorAdapter()
 
-  for (const field of ['id', 'studentId', 'planId']) {
+  const acceptedFields = [
+    'name',
+    'email',
+    'age',
+    'height',
+    'weigth'
+  ]
+
+  for (const field of acceptedFields) {
     validations.push(new RequiredFields(field))
   }
+  validations.push(new EmailValidator('email', emailValidator))
 
-  validations.push(new RestrictFields(['id', 'studentId', 'planId', 'startDate']))
+  validations.push(new RestrictFields(acceptedFields))
 
   return new ValidationComposite(validations)
 }

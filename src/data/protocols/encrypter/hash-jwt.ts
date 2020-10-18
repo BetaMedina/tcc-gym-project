@@ -1,3 +1,3 @@
 export interface JwtAdapter{
-  hashGenerate (id:number):Promise<string> 
+  hashGenerate (id:number, isAdmin?:boolean):Promise<string> 
 }

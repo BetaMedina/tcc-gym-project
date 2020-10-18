@@ -12,7 +12,7 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
       if (!decrypt) {
         return null
       }
-      if (admin && !decrypt.isAdmin) {
+      if (admin && !decrypt.admin) {
         return null
       }
       return this.loadAccountByTokenRepository.loadById(decrypt.id)

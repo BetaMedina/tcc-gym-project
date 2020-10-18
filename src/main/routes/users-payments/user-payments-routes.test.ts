@@ -5,9 +5,23 @@ import { Connection, getRepository } from 'typeorm'
 import app from '@main/config/app'
 import request from 'supertest'
 import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
+import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
+import { JsonWebTokenAdapter } from '@infra/adapters/cryptography/jsonwebtoken/jwt-adapter'
 
 let connection: Connection
-let student, plan, Payment
+let student, plan, Payment, token
+
+const makeJwtToken = async () => {
+  const user = await getRepository(Users).create({
+    name: 'planUser',
+    age: 22,
+    email: 'userPlanTest@admin.com',
+    isAdmin: true,
+    password: 'hashPassword'
+  })
+  const jwtAdapter = new JsonWebTokenAdapter()
+  return jwtAdapter.hashGenerate(user.id, true)
+}
 
 describe('User Payments Routes', () => {
   beforeEach(async () => {
@@ -28,6 +42,7 @@ describe('User Payments Routes', () => {
       price: 99,
       duration: 15
     }).save()
+    token = await makeJwtToken()
   })
   afterAll(async () => {
     await connection.close()
@@ -41,7 +56,7 @@ describe('User Payments Routes', () => {
       paymentValue: 69.99,
       paymentDate: new Date()
     }
-    const response = await request(app).post('/api/user-payment').send(payload)
+    const response = await request(app).post('/api/user-payment').set({ 'x-access-token': token }).send(payload)
     expect(response.statusCode).toBe(200)
   })
 })
@@ -54,7 +69,7 @@ describe('User Payments List routes', () => {
     await connection.close()
   })
   test('Should return an User Payment on success', async () => {
-    const response = await request(app).get('/api/user-payment').send()
+    const response = await request(app).get('/api/user-payment').set({ 'x-access-token': token }).send()
     expect(response.statusCode).toBe(200)
   })
 })
@@ -82,7 +97,7 @@ describe('User Payments Update routes', () => {
       paymentValue: 89.99,
       paymentDate: new Date()
     }
-    const response = await request(app).put(`/api/user-payment/${Payment.id}`).send(payload)
+    const response = await request(app).put(`/api/user-payment/${Payment.id}`).set({ 'x-access-token': token }).send(payload)
     expect(response.statusCode).toBe(200)
   })
 })

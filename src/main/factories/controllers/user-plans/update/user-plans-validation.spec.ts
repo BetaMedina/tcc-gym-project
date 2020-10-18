@@ -13,7 +13,7 @@ describe('LogIn Validation Factory', () => {
     for (const field of ['id', 'studentId', 'planId']) {
       validations.push(new RequiredFields(field))
     }
-    validations.push(new RestrictFields(['id', 'studentId', 'planId']))
+    validations.push(new RestrictFields(['id', 'studentId', 'planId', 'startDate']))
 
     expect(ValidationComposite).toHaveBeenCalledWith(validations) 
   })

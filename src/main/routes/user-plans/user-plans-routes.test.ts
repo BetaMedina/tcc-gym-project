@@ -5,8 +5,22 @@ import { Students } from '@infra/db/mysql/typeorm/entities/students-entities'
 import { getRepository } from 'typeorm'
 import { Plans } from '@infra/db/mysql/typeorm/entities/plans-entities'
 import { UsersPlans } from '@infra/db/mysql/typeorm/entities/users-plans-entities'
+import { Users } from '@infra/db/mysql/typeorm/entities/users-entities'
+import { JsonWebTokenAdapter } from '@infra/adapters/cryptography/jsonwebtoken/jwt-adapter'
 
-let connection, student, plan
+let connection, student, plan, token
+
+const makeJwtToken = async () => {
+  const user = await getRepository(Users).create({
+    name: 'planUser',
+    age: 22,
+    email: 'userPlanTest@admin.com',
+    isAdmin: true,
+    password: 'hashPassword'
+  })
+  const jwtAdapter = new JsonWebTokenAdapter()
+  return jwtAdapter.hashGenerate(user.id, true)
+}
 
 describe('User Plans Routes', () => {
   beforeAll(async () => {
@@ -27,6 +41,7 @@ describe('User Plans Routes', () => {
       duration: 3,
       price: 99
     }).save()
+    token = await makeJwtToken()
   })
   afterAll(async () => {
     await connection.close()
@@ -38,7 +53,7 @@ describe('User Plans Routes', () => {
       studentId: student.id,
       planId: plan.id
     }
-    const response = await request(app).post('/api/user-plans').send(payload)
+    const response = await request(app).post('/api/user-plans').set({ 'x-access-token': token }).send(payload)
     expect(response.statusCode).toBe(200)
   })
   test('Should return an list on success', async () => {
@@ -60,7 +75,7 @@ describe('User Plans Routes', () => {
       plan: plan,
       student: student
     }).save()
-    const response = await request(app).get('/api/user-plans').send()
+    const response = await request(app).get('/api/user-plans').set({ 'x-access-token': token }).send()
     expect(response.statusCode).toBe(200)
     expect(response.body[0].student).toBeInstanceOf(Object)
     expect(response.body[0].plan).toBeInstanceOf(Object)
@@ -75,10 +90,11 @@ describe('User Plans Routes', () => {
     const payload = {
       id: userPlan.id,
       studentId: student.id,
-      planId: plan.id
+      planId: plan.id,
+      startDate: new Date()
     }
 
-    const response = await request(app).put('/api/user-plans').send(payload)
+    const response = await request(app).put('/api/user-plans').set({ 'x-access-token': token }).send(payload)
     expect(response.statusCode).toBe(200)
     expect(response.body.student).toBeInstanceOf(Object)
     expect(response.body.plan).toBeInstanceOf(Object)
@@ -102,7 +118,7 @@ describe('User Plans Routes', () => {
       student: student
     }).save()
 
-    const response = await request(app).get(`/api/user-plans/${userPlan.id}`).send()
+    const response = await request(app).get(`/api/user-plans/${userPlan.id}`).set({ 'x-access-token': token }).send()
 
     expect(response.statusCode).toBe(200)
     expect(response.body.student).toBeInstanceOf(Object)
@@ -128,7 +144,7 @@ describe('User Plans Routes', () => {
       student: student
     }).save()
 
-    const response = await request(app).delete(`/api/user-plans/${userPlan.id}`).send()
+    const response = await request(app).delete(`/api/user-plans/${userPlan.id}`).set({ 'x-access-token': token }).send()
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual('User plan has been deleted')

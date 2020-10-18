@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken'
 import { Decrypter } from '@data/protocols/encrypter/decrypt'
 
 export class JsonWebTokenAdapter implements JwtAdapter, Decrypter {
-  async hashGenerate (id:number):Promise<string> {
-    return jwt.sign({ id }, ENUM.JWT_SECRET, { expiresIn: ENUM.JWT_TIME })     
+  async hashGenerate (id:number, isAdmin?:boolean):Promise<string> {
+    return jwt.sign({ id, admin: isAdmin }, ENUM.JWT_SECRET, { expiresIn: ENUM.JWT_TIME })     
   }
 
   async decrypt (ciphertext: string): Promise<string> {

@@ -10,6 +10,7 @@ export class AuthMiddleware implements Middleware {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
+      // if (process.env.NODE_ENV !== 'production') return successResponse({ accountId: null })
       const accessToken = httpRequest.headers?.['x-access-token']
       if (accessToken) {
         const account = await this.loadAccountByToken.load(accessToken, this.admin)

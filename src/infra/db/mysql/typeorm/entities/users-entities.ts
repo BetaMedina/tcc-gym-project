@@ -10,7 +10,7 @@ import {
 @Entity('users')
 class Users extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
-  id: Number;
+  id: number;
 
   @Column('varchar')
   name: string;

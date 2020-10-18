@@ -16,11 +16,11 @@ export class AuthenticationData implements Authentication {
     if (!(await this.encrypt.compare(authenticationParams.password, dbResponse.password))) {
       return null
     }
-    const encryptToken = await this.jwtAdapter.hashGenerate(Number(dbResponse.id))
+    const encryptToken = await this.jwtAdapter.hashGenerate(Number(dbResponse.id), dbResponse.isAdmin)
     return {
       accessToken: encryptToken,
       name: dbResponse.name,
-      isAdmin:dbResponse.isAdmin
+      isAdmin: dbResponse?.isAdmin
     }
   }
 }

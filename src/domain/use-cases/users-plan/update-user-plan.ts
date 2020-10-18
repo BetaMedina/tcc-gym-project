@@ -4,5 +4,5 @@ import { Plan } from '@domain/models/plans/plans'
 import { StudentModel } from '@domain/models/student/student'
 
 export interface IUpdateUserPlan{
-  update (id:number, student:StudentModel, plan:Plan):Promise<UserPlanModel> 
+  update (id:number, student:StudentModel, plan:Plan, date?:Date):Promise<UserPlanModel> 
 }

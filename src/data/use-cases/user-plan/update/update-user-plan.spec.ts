@@ -54,9 +54,9 @@ describe('=== UPDATE USER PLAN ===', () => {
   it('Should expected to receveid correct parameters', async () => {
     const { updateUserPlanSut, sut } = makeSut()
     const spyPlan = jest.spyOn(updateUserPlanSut, 'updateRow')
-
-    await sut.update(1, UserRequest, PlanRequest)
-    expect(spyPlan).toHaveBeenCalledWith(1, UserRequest, PlanRequest)
+    const date = new Date()
+    await sut.update(1, UserRequest, PlanRequest, date)
+    expect(spyPlan).toHaveBeenCalledWith(1, UserRequest, PlanRequest, date)
   })
   it('Should expected to receveid correct parameters', async () => {
     const { updateUserPlanSut, sut } = makeSut()

@@ -23,11 +23,12 @@ export class UserPlanRepository implements IAddUserPlanRepository, IListUserPlan
     return getRepository(UsersPlans).find({ relations: ['student', 'plan'] })
   }
 
-  async updateRow (id:number, student:StudentModel, plan:Plan):Promise<UserPlanModel> {
+  async updateRow (id:number, student:StudentModel, plan:Plan, startDate?:Date):Promise<UserPlanModel> {
     const userPlan = new UsersPlans()
     userPlan.id = id
     userPlan.student = student as Students
     userPlan.plan = plan as Plans 
+    userPlan.start_date = startDate
     return getRepository(UsersPlans).save(userPlan)
   }
 

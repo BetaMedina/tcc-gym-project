@@ -8,5 +8,5 @@ export interface UpdatePlanReceived{
 }
 
 export interface UpdatePlanCase{
-  update (payload:UpdatePlanReceived):Promise<Plan> 
+  update (payload:UpdatePlanReceived):Promise<boolean> 
 }

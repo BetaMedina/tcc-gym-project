@@ -26,7 +26,7 @@ export class UsersPayments implements ControllerInterface {
         return badRequest(new NotFoundError('Id plan'))
       }
       const { studentId, planId, ...data } = httpRequest.body
-      const userPaymentResponse = await this.createUserPayment.create({ user, plan, ...data })
+      const userPaymentResponse = await this.createUserPayment.create({ student: user, plan, ...data })
       return successResponse(userPaymentResponse)
     } catch (err) {
       return serverError(new ServerError(err.message))

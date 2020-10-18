@@ -14,8 +14,8 @@ export class PlansController implements ControllerInterface {
       
       if (!plan) { return invalidParam(new InvalidParamError('Plan not exist')) }
 
-      const updatedPlan = await this.updatePlan.update({ id, ...httpRequest.body })
-      return successResponse(updatedPlan)
+      await this.updatePlan.update({ id, ...httpRequest.body })
+      return successResponse('user has been updated')
     } catch (err) {
       return serverError(new ServerError(err))
     }

@@ -58,9 +58,6 @@ describe('=== Plans Update ===', () => {
     const payload = mockPlanPutRequest() 
     const httpResponse = await sut.handle(payload)
 
-    expect(httpResponse.body.id).toBeTruthy()
-    expect(httpResponse.body.name).toBeTruthy()
-    expect(httpResponse.body.price).toBeTruthy()
-    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual('user has been updated')
   })
 })

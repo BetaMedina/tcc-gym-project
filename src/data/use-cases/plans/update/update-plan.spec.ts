@@ -9,13 +9,8 @@ interface SutTypes {
 
 const makeSut = ():SutTypes => {
   class UpdatePlanSut implements UpdatePlanRepository {
-    async updateRows ():Promise<Plan> {
-      return {
-        id: 1,
-        name: 'any_name',
-        price: 99,
-        duration: 3
-      }
+    async updateRows ():Promise<boolean> {
+      return true
     }
   }
   const updatePlanSut = new UpdatePlanSut()
@@ -48,11 +43,6 @@ describe('=== Update Plans Use Case ===', () => {
       duration: 3
     }
     const httpResponse = await sut.update(payload)
-    expect(httpResponse).toEqual({
-      id: 1,
-      name: 'any_name',
-      price: 99,
-      duration: 3
-    })
+    expect(httpResponse).toEqual(true)
   })
 })

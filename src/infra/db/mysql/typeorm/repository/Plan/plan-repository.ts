@@ -23,8 +23,8 @@ export class PlanRepository implements AddPlanRepository, ListPlansRepository, R
     return getRepository(Plans).findOne(id)
   }
 
-  async updateRows (payload:UpdatePlanReceived):Promise<Plans> {
-    return getRepository(Plans).save(payload)
+  async updateRows (payload:UpdatePlanReceived):Promise<boolean> {
+    return !!getRepository(Plans).update({ id: payload.id }, { ...payload })
   }
   
   async deleteRow (id:number):Promise<boolean> {

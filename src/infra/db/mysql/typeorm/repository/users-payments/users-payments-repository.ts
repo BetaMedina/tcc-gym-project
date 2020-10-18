@@ -27,18 +27,11 @@ export class UserPaymentRepository implements IAddUserPaymentRepository, IListUs
   }
 
   async updateRow (payload:IAddUserPaymentReceived):Promise<boolean> {
-    const userPayment = new UsersPayments()
-    userPayment.id = payload.id
-    userPayment.student = payload.student as Students
-    userPayment.plan = payload.plan as Plans 
-    userPayment.payment_type = payload.paymentType
-    userPayment.payment_value = payload.paymentValue
-    userPayment.payment_date = payload.paymentDate
-    return !!getRepository(UsersPayments).save(userPayment)
+    const { id, paymentDate, paymentValue, paymentType } = payload
+    return !!getRepository(UsersPayments).update({ id }, { payment_date: paymentDate, payment_value: paymentValue, payment_type: paymentType })
   }
 
   async readRow (id:string):Promise<IUsersPaymentsModel> {
-    const response = await getRepository(UsersPayments).findOne({ relations: ['student', 'plan'], where: { id } })
-    return response
+    return getRepository(UsersPayments).findOne({ relations: ['student', 'plan'], where: { id } })
   }
 }

@@ -8,6 +8,5 @@ export default (route: Router):void => {
   route.post('/user-payment', adaptMiddleware(makeAuthMiddleware(true)), adaptRoute(makeUserPaymentsController()))
   route.get('/user-payment', adaptMiddleware(makeAuthMiddleware(true)), adaptRoute(makeListUserPaymentsController()))
   route.put('/user-payment/:id', adaptMiddleware(makeAuthMiddleware(true)), adaptRoute(makeUpdateUserPaymentsController()))
-  route.put('/user-payment/:id', adaptMiddleware(makeAuthMiddleware(true)), adaptRoute(makeUpdateUserPaymentsController()))
   route.get('/user-payment/:id', adaptMiddleware(makeAuthMiddleware(true)), adaptRoute(makeReadUserPaymentsController()))
 }

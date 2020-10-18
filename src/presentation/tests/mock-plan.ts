@@ -35,7 +35,7 @@ export class FindPlanCaseStub implements FindPlanCase {
 }
 
 export class UpdatePlanCaseStub implements UpdatePlanCase {
-  async update (payload:UpdatePlanReceived):Promise<Plan> {
-    return payload
+  async update (payload:UpdatePlanReceived):Promise<boolean> {
+    return true
   }
 }

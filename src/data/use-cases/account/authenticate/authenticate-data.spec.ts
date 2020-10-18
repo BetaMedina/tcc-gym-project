@@ -76,7 +76,7 @@ describe('=== Authenticate Data ===', () => {
     expect(response).toEqual({
       accessToken: 'hashedPassword',
       name: 'valid_name',
-      isAdmin:false
+      isAdmin: false
     })
   })
 })

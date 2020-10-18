@@ -20,7 +20,7 @@ export class AuthenticationData implements Authentication {
     return {
       accessToken: encryptToken,
       name: dbResponse.name,
-      isAdmin: dbResponse?.isAdmin
+      isAdmin: dbResponse.isAdmin
     }
   }
 }

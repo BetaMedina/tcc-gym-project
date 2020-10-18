@@ -63,9 +63,6 @@ describe('SignUp Routes', () => {
     }
     const response = await request(app).put('/api/plan').set({ 'x-access-token': token }).send(payload)
     expect(response.statusCode).toBe(200)
-    expect(response.body.name).toEqual('plan silver')
-    expect(response.body.price).toEqual(79.99)
-    expect(response.body.duration).toEqual(15)
   })
   test('Should expected to return a new Plan', async () => {
     const plan = await getRepository(Plans).create({
